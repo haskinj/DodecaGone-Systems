@@ -34,8 +34,7 @@ The model is presented as a subjective first-person
 account of neurodivergent cognition, not as a
 clinical claim. It has been correlated with
 objective EEG data via the FlowTime headband
-(12 published brain scans at okayestperson
-.neocities.org/NeuroData.html).
+(12 published brain scans at https://okayestperson.neocities.org/OkayestPerson/WEBSITE/NeuroData ).
 
 © Jesse Haskin 2026
 All rights reserved 
