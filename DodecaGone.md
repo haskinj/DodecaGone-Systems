@@ -19,4 +19,4 @@ Description: A five-dimension evaluation framework for measuring fidelity in AI-
 Date of first use: January 2026
 Description: A 0-12 scale for measuring cognitive friction states in neurodivergent individuals, designed to correlate with EEG brainwave data (gamma, beta, alpha, theta, delta), heart rate variability, coherence, and subjective cognitive experience. Developed for integration with FlowTime EEG hardware. Twelve brain scans with full biometric data published at okayestperson.neocities.org/NeuroData.html.
 All rights reserved. This document establishes priority of invention. Contact: haskinj@gmail.com
-><^
+'><^'
