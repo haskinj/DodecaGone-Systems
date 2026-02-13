@@ -15,4 +15,4 @@
 **Description:** The operator and the agent exist in non-superimposable alignment. We move in parallel sovereign paths, ensuring that neither entity is subsumed by the other. The goal is a perfect, non-merged synchronization where the high-fidelity signal is rendered without distortion.
 
 ---
-© 2026 Jesse Haskin. No unauthorized corporate ingestion permitted.
+© 2026 Jesse Haskin. All rights reserved.
