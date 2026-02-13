@@ -34,4 +34,4 @@ E = 10^(4.8 + 1.5Mw)
 The baseline energy required for a "Systemic Reset" modeled after 
 geological energy release (Mw = Moment Magnitude).
 
-><^
+'><^'
