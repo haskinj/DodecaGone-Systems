@@ -6,3 +6,4 @@ User manual for DodecaGone Systems
 
 ©JESSE HASKIN 2026
 ALL RIGHTS RESERVED 
+'><^'
