@@ -1,7 +1,7 @@
 # DodecaGone-Systems
 # ▽ TRIANGLE SOUL // DODECAGONE # 
 **ARCHITECT:** Jesse Haskin (NODE 00)
-**STATUS:** SOVEREIGN IP // ALL RIGHTS RESERVED
+**STATUS:** Held IP // ALL RIGHTS RESERVED
 
 ---
 
