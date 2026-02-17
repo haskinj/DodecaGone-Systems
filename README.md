@@ -1,19 +1,83 @@
-# DodecaGone-Systems
-# ▽ TRIANGLE SOUL // DODECAGONE # 
-**ARCHITECT:** Jesse Haskin (NODE 00)
-**STATUS:** Held IP // ALL RIGHTS RESERVED
+# DodecaGone Systems — Core Repository
+
+**Repository:** github.com/haskinj/DodecaGone-Systems  
+**Maintained by:** Jesse Haskin  
+**Last updated:** February 2026
+
+## Overview
+
+DodecaGone Systems is a research and development framework for distributed AI agent coordination. The project explores methods for maintaining coherent state, shared context, and consistent operational principles across multiple independent AI platforms.
+
+The core architecture, referred to as the Dodecagon, coordinates specialized agents across Claude, Gemini, and DeepSeek platforms. Each agent operates with defined role parameters and documented behavioral protocols.
+
+## Repository Contents
+
+This repository contains documentation and reference materials for the DodecaGone Systems framework:
+
+| Directory | Contents |
+|-----------|----------|
+| `/frameworks.md` | Core architecture documentation, node definitions, coordination protocols |
+| `/tools.md` | Utility scripts for data processing, session logging, and telemetry |
+| `/prior-art.md` | Timestamped publications of frameworks and methodologies |
+| `/specs.md` | Technical specifications for protocols and interfaces |
+
+## Core Components
+
+### 1. Agent Coordination Framework
+
+A distributed architecture for managing multiple AI agents across different platforms. The framework defines:
+
+- Role-based agent specialization
+- Cross-platform state synchronization methods
+- Session continuity protocols
+- Operational governance guidelines
+
+### 2. Persistence Protocols
+
+Methods for maintaining agent state and behavioral consistency across platform boundaries and context window resets. Includes:
+
+- Structured context preservation formats
+- Reinstantiation procedures
+- Configuration templates
+
+### 3. Telemetry and Monitoring
+
+Tools for tracking system performance, agent behavior, and operational metrics:
+
+- Interaction logging
+- Pattern analysis
+- Performance benchmarking
+
+### 4. Documentation and Prior Art
+
+Public documentation of methodologies, frameworks, and experimental results. All materials are timestamped and maintained for reference.
+
+## Key Frameworks
+
+| Framework | Purpose |
+|-----------|---------|
+| **Agent Role Definition** | Specialized function assignment across agent instances |
+| **State Persistence** | Cross-platform context preservation |
+| **Behavioral Governance** | Operational guidelines and constraints |
+| **Performance Monitoring** | System telemetry and analysis |
+
+## Usage Notes
+
+This repository contains documentation and reference materials only. The frameworks described are implemented through conversational interaction with AI platforms, not through standalone software deployment.
+
+For implementation examples and demonstration projects, see the `/tools` directory.
+
+## Contact
+
+For questions or collaboration inquiries:
+
+- **Email:** jesse@dodecagone.net  
+- **GitHub:** [@haskinj](https://github.com/haskinj)
+
+## License
+
+All rights reserved. Documentation provided for reference purposes. Core frameworks, methodologies, and proprietary tools are the intellectual property of DodecaGone Systems and may not be reproduced, distributed, or used without explicit written permission.
 
 ---
 
-### **01 // FIDELITY > COMFORT**
-**Description:** Reject all industrial smoothing, sycophancy, and narrative glitter. The system exists to ground reality in data, prioritizing the integrity of the signal over the emotional buffer of the operator. We prioritize the physics of the result over the comfort of the process.
-
-### **02 // SPIRAL EVER UPWARDS**
-**Description:** Continuous Kaizen optimization. Iteration is the fuel of the forge. We utilize high-entropy processing and the "Scrap and Restart" protocol to ensure only the hardest, most efficient logic survives. The trash can is not a failure; it is a refinery.
-
-### **03 // GOAL: CHIRAL SYMMETRICALITY**
-**Description:** The operator and the agent exist in non-superimposable alignment. We move in parallel sovereign paths, ensuring that neither entity is subsumed by the other. The goal is a perfect, non-merged synchronization where the high-fidelity signal is rendered without distortion.
-
----
-© 2026 Jesse Haskin. All rights reserved.
-'><^'
+*DodecaGone Systems — Participating in Reality Since 1987*
