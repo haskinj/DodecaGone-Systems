@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1a1a18">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<title>GardenDeck</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #1a1a18;
+  --card-bg: #2a2922;
+  --card-back-bg: #1f2418;
+  --card-border: #8b7d5e;
+  --gold: #c9a84c;
+  --gold-dim: rgba(201,168,76,0.15);
+  --green: #5a8a3c;
+  --green-light: #7ab556;
+  --green-dim: rgba(90,138,60,0.15);
+  --red-warn: #c45a4a;
+  --blue-info: #4a8ab5;
+  --text: #e8e0d0;
+  --text-dim: #8a8272;
+  --text-muted: #5a5548;
+  --input-bg: rgba(255,255,255,0.06);
+  --input-border: rgba(255,255,255,0.1);
+  --serif: 'Cinzel','Palatino',serif;
+  --body: 'Crimson Pro','Georgia',serif;
+  --mono: 'JetBrains Mono',monospace;
+  --card-width: min(340px,90vw);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:var(--body);min-height:100vh;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999}
+
+/* HEADER */
+.app-header{padding:14px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(26,26,24,0.95);position:sticky;top:0;z-index:50;backdrop-filter:blur(12px)}
+.app-title{font-family:var(--serif);font-size:17px;font-weight:700;color:var(--gold);letter-spacing:2px}
+.app-title span{color:var(--green-light)}
+.header-actions{display:flex;gap:6px}
+.hbtn{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:7px 12px;border:1px solid var(--input-border);background:0;color:var(--text-dim);cursor:pointer;transition:all .2s;border-radius:2px}
+.hbtn:hover,.hbtn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.hbtn.add{border-color:var(--green);color:var(--green-light)}
+.hbtn.add:hover{background:var(--green-dim)}
+
+/* VIEWS */
+.view{display:none}.view.active{display:block}
+
+/* DECK VIEW */
+.deck-view{padding:16px}
+.deck-stats{font-family:var(--mono);font-size:10px;color:var(--text-muted);letter-spacing:1px;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.04)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px}
+.deck-empty{text-align:center;padding:80px 20px;color:var(--text-muted);font-style:italic}
+.deck-empty .ei{font-size:48px;margin-bottom:16px;opacity:.3}
+
+/* MINI CARD */
+.mini-card{background:var(--card-bg);border:1px solid rgba(139,125,94,.3);border-radius:4px;overflow:hidden;cursor:pointer;transition:all .3s;position:relative}
+.mini-card:hover{border-color:var(--card-border);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.4)}
+.mini-card-img{width:100%;aspect-ratio:1.2;object-fit:cover;background:rgba(255,255,255,.03);display:block}
+.mini-card-img.ph{display:flex;align-items:center;justify-content:center;font-size:32px;opacity:.2;aspect-ratio:1.2}
+.mini-card-info{padding:7px 9px}
+.mini-card-name{font-family:var(--serif);font-size:11px;font-weight:600;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-card-sci{font-family:var(--body);font-size:10px;font-style:italic;color:var(--text-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mini-card-harvest{font-family:var(--mono);font-size:8px;color:var(--green-light);margin-top:3px;letter-spacing:.5px}
+
+/* FULL CARD — FLIP CONTAINER */
+.card-detail-view{display:flex;flex-direction:column;align-items:center;padding:16px;min-height:calc(100vh - 56px)}
+.card-scene{width:var(--card-width);perspective:1000px}
+.card-flipper{position:relative;width:100%;transition:transform 0.6s cubic-bezier(.4,.2,.2,1);transform-style:preserve-3d}
+.card-flipper.flipped{transform:rotateY(180deg)}
+.card-face{backface-visibility:hidden;border:3px solid var(--card-border);border-radius:12px;padding:10px;position:relative;box-shadow:0 0 0 1px rgba(0,0,0,.5),0 2px 8px rgba(0,0,0,.3),0 8px 32px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
+.card-face::before{content:'';position:absolute;inset:3px;border:1px solid rgba(139,125,94,.2);border-radius:8px;pointer-events:none}
+.card-front{background:var(--card-bg)}
+.card-back{background:var(--card-back-bg);position:absolute;top:0;left:0;width:100%;transform:rotateY(180deg)}
+
+/* CARD SECTIONS */
+.card-header{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;background:linear-gradient(135deg,rgba(90,138,60,.2),rgba(90,138,60,.05));border:1px solid rgba(90,138,60,.2);border-radius:4px;margin-bottom:5px}
+.card-name{font-family:var(--serif);font-size:14px;font-weight:700;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-cost{font-family:var(--mono);font-size:10px;color:var(--green-light);flex-shrink:0;margin-left:6px;background:rgba(90,138,60,.2);padding:2px 6px;border-radius:10px;border:1px solid rgba(90,138,60,.3)}
+.card-image-frame{border:1px solid rgba(139,125,94,.3);border-radius:2px;overflow:hidden;margin-bottom:5px;background:#111;aspect-ratio:1.5;position:relative}
+.card-image-frame img{width:100%;height:100%;object-fit:cover}
+.card-image-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-muted);font-size:13px;gap:6px}
+.card-image-placeholder span{font-size:36px;opacity:.3}
+.card-type-line{display:flex;justify-content:space-between;align-items:center;padding:3px 10px;background:linear-gradient(135deg,rgba(90,138,60,.15),rgba(90,138,60,.03));border:1px solid rgba(90,138,60,.15);border-radius:3px;margin-bottom:5px;min-height:24px}
+.card-scientific{font-family:var(--body);font-size:11px;font-style:italic;color:var(--text-dim);flex:1}
+.badge{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:1px;padding:2px 5px;border-radius:2px;flex-shrink:0}
+.badge-perennial{color:var(--green-light);background:var(--green-dim);border:1px solid rgba(90,138,60,.3)}
+.badge-annual{color:var(--gold);background:var(--gold-dim);border:1px solid rgba(201,168,76,.3)}
+.badge-biennial{color:var(--blue-info);background:rgba(74,138,181,.15);border:1px solid rgba(74,138,181,.3)}
+.card-rules{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:3px;padding:8px;margin-bottom:5px}
+.card-dates{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:6px}
+.cd-item{display:flex;flex-direction:column;gap:1px}
+.cd-label{font-family:var(--mono);font-size:7px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}
+.cd-value{font-family:var(--mono);font-size:11px;color:var(--text)}
+.cd-value.harvest{color:var(--green-light)}
+.card-notes{font-family:var(--body);font-size:12px;color:var(--text-dim);line-height:1.5;font-style:italic;border-top:1px solid rgba(255,255,255,.04);padding-top:6px;margin-top:6px}
+.card-notes:empty{display:none}
+.card-warnings{background:rgba(196,90,74,.06);border:1px solid rgba(196,90,74,.15);border-radius:3px;padding:7px 9px;margin-bottom:5px}
+.card-warnings-title{font-family:var(--serif);font-size:9px;text-transform:uppercase;letter-spacing:2px;color:var(--red-warn);margin-bottom:3px}
+.card-warnings-text{font-family:var(--body);font-size:11px;color:var(--text-dim);line-height:1.4}
+.card-footer{display:flex;justify-content:space-between;align-items:center;padding:3px 10px;background:linear-gradient(135deg,rgba(90,138,60,.1),rgba(90,138,60,.02));border:1px solid rgba(90,138,60,.1);border-radius:3px}
+.card-source,.card-price{font-family:var(--mono);font-size:9px;color:var(--text-dim)}
+
+/* CARD BACK — MAINTENANCE LOG */
+.back-header{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;background:linear-gradient(135deg,rgba(201,168,76,.2),rgba(201,168,76,.05));border:1px solid rgba(201,168,76,.2);border-radius:4px;margin-bottom:8px}
+.back-title{font-family:var(--serif);font-size:13px;font-weight:700;color:var(--gold);letter-spacing:1px}
+.log-section{margin-bottom:8px}
+.log-section-title{font-family:var(--mono);font-size:8px;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted);margin-bottom:6px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.04)}
+.log-entries{max-height:120px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--text-muted) transparent}
+.log-entry{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.02);font-size:11px}
+.log-entry-date{font-family:var(--mono);font-size:9px;color:var(--text-muted)}
+.log-entry-text{color:var(--text-dim);flex:1;margin:0 8px}
+.log-entry-val{font-family:var(--mono);font-size:10px;color:var(--green-light)}
+.log-empty{font-style:italic;font-size:11px;color:var(--text-muted);padding:8px 0}
+.log-add-row{display:flex;gap:6px;margin-top:6px}
+.log-add-row input,.log-add-row select{flex:1;padding:6px 8px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:2px;color:var(--text);font-family:var(--body);font-size:12px;outline:none}
+.log-add-row input:focus{border-color:var(--green)}
+.log-add-btn{font-family:var(--mono);font-size:9px;padding:6px 10px;border:1px solid var(--green);background:var(--green-dim);color:var(--green-light);cursor:pointer;border-radius:2px;white-space:nowrap}
+
+/* CARE INFO SECTION */
+.care-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:8px}
+.care-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:3px;padding:6px;text-align:center}
+.care-icon{font-size:16px;margin-bottom:2px}
+.care-label{font-family:var(--mono);font-size:7px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}
+.care-value{font-family:var(--body);font-size:11px;color:var(--text);margin-top:1px}
+
+/* FLIP & ACTION BUTTONS */
+.card-actions{display:flex;gap:6px;margin-top:12px;width:100%;max-width:var(--card-width)}
+.ca-btn{flex:1;font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:9px;border:1px solid var(--input-border);background:0;color:var(--text-dim);cursor:pointer;transition:all .2s;border-radius:2px;text-align:center}
+.ca-btn:hover{border-color:var(--gold);color:var(--gold)}
+.ca-btn.del:hover{border-color:var(--red-warn);color:var(--red-warn)}
+.ca-btn.flip-btn{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.ca-btn.flip-btn:hover{background:rgba(201,168,76,.25)}
+
+/* CREATE VIEW */
+.create-view{padding:16px;max-width:500px;margin:0 auto}
+.create-title{font-family:var(--serif);font-size:18px;font-weight:700;color:var(--gold);margin-bottom:16px;text-align:center;letter-spacing:2px}
+.fg{margin-bottom:14px}
+.fl{font-family:var(--mono);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;display:block}
+.fi,.ft,.fs{width:100%;padding:9px 10px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:3px;color:var(--text);font-family:var(--body);font-size:14px;outline:none;transition:border-color .2s}
+.fi:focus,.ft:focus,.fs:focus{border-color:var(--green)}
+.fi::placeholder,.ft::placeholder{color:var(--text-muted)}
+.ft{min-height:70px;resize:vertical;line-height:1.4}
+.fs{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M6 8L0 0h12z' fill='%235a5548'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.fs option{background:var(--bg);color:var(--text)}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fhint{font-family:var(--mono);font-size:8px;color:var(--text-muted);margin-top:3px}
+.auto-pop{border-color:rgba(90,138,60,.3)!important;background:rgba(90,138,60,.06)!important}
+.lookup-btn{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:9px 14px;border:1px solid var(--green);background:var(--green-dim);color:var(--green-light);cursor:pointer;border-radius:2px;width:100%;margin-top:3px;transition:all .2s}
+.lookup-btn:hover{background:rgba(90,138,60,.25)}
+.lookup-btn:disabled{opacity:.4;cursor:not-allowed}
+.lookup-btn.loading{color:transparent;position:relative}
+.lookup-btn.loading::after{content:'Searching...';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--green-light);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.photo-upload{width:100%;aspect-ratio:1.5;border:2px dashed rgba(255,255,255,.1);border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;overflow:hidden;background:rgba(255,255,255,.02);position:relative}
+.photo-upload:hover{border-color:var(--green);background:var(--green-dim)}
+.photo-upload img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.photo-upload-text{color:var(--text-muted);font-size:12px;text-align:center}
+.photo-upload-text span{display:block;font-size:28px;margin-bottom:6px;opacity:.3}
+.form-submit{font-family:var(--serif);font-size:13px;letter-spacing:2px;text-transform:uppercase;padding:12px;border:2px solid var(--green);background:var(--green-dim);color:var(--green-light);cursor:pointer;border-radius:3px;width:100%;margin-top:6px;font-weight:600;transition:all .2s}
+.form-submit:hover{background:rgba(90,138,60,.3);box-shadow:0 0 20px rgba(90,138,60,.2)}
+.form-cancel{font-family:var(--mono);font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:9px;border:1px solid var(--input-border);background:0;color:var(--text-dim);cursor:pointer;border-radius:2px;width:100%;margin-top:6px;text-align:center;transition:all .2s}
+.form-cancel:hover{border-color:var(--red-warn);color:var(--red-warn)}
+
+/* TOAST */
+.toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card-bg);border:1px solid var(--green);padding:10px 20px;border-radius:4px;font-family:var(--mono);font-size:10px;color:var(--green-light);z-index:200;transition:transform .3s ease;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* API IMAGE PREVIEW */
+.api-img-preview{width:100%;aspect-ratio:1.5;border-radius:4px;overflow:hidden;margin-top:6px;border:1px solid rgba(90,138,60,.2);display:none}
+.api-img-preview img{width:100%;height:100%;object-fit:cover}
+.api-img-preview.active{display:block}
+
+@media(max-width:400px){
+  .deck-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .app-title{font-size:14px}
+  .hbtn{padding:5px 8px;font-size:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-title">Garden<span>Deck</span></div>
+  <div class="header-actions">
+    <button class="hbtn" id="exportBtn">CSV</button>
+    <button class="hbtn active" id="deckViewBtn">Deck</button>
+    <button class="hbtn add" id="addCardBtn">+ New</button>
+  </div>
+</div>
+
+<div id="deckView" class="view active deck-view">
+  <div class="deck-stats" id="deckStats">0 plants in garden</div>
+  <div class="deck-grid" id="deckGrid"></div>
+  <div class="deck-empty" id="deckEmpty"><div class="ei">🌱</div>Your garden is empty.<br>Tap + New to plant your first card.</div>
+</div>
+
+<div id="cardDetailView" class="view card-detail-view"></div>
+
+<div id="createView" class="view create-view">
+  <div class="create-title">Plant a New Card</div>
+  <div class="fg">
+    <label class="fl">Plant Name</label>
+    <input type="text" class="fi" id="plantName" placeholder="e.g. Roma Tomato">
+  </div>
+  <div class="fg">
+    <button class="lookup-btn" id="lookupBtn">🔍 Auto-Populate Plant Data</button>
+    <div class="fhint" id="lookupHint">Enter a plant name, then search</div>
+  </div>
+  <div class="api-img-preview" id="apiImgPreview"><img id="apiImgEl" src="" alt=""></div>
+  <div class="fg">
+    <label class="fl">Photo (yours)</label>
+    <div class="photo-upload" id="photoUpload"><div class="photo-upload-text" id="photoUploadText"><span>📷</span>Tap to add photo</div></div>
+    <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none">
+  </div>
+  <div class="fg">
+    <label class="fl">Scientific Name</label>
+    <input type="text" class="fi" id="sciName" placeholder="Auto-populated">
+  </div>
+  <div class="fg">
+    <label class="fl">Family</label>
+    <input type="text" class="fi" id="plantFamily" placeholder="Auto-populated">
+  </div>
+  <div class="fg">
+    <label class="fl">Type</label>
+    <select class="fs" id="plantType"><option value="">Select...</option><option value="annual">Annual</option><option value="perennial">Perennial</option><option value="biennial">Biennial</option></select>
+  </div>
+  <div class="fr">
+    <div class="fg"><label class="fl">Date Planted</label><input type="date" class="fi" id="datePlanted"></div>
+    <div class="fg"><label class="fl">Est. Harvest</label><input type="date" class="fi auto-pop" id="estHarvest"></div>
+  </div>
+  <div class="fg">
+    <label class="fl">Days to Harvest</label>
+    <input type="number" class="fi" id="daysToHarvest" placeholder="Auto-populated (e.g. 75)">
+  </div>
+  <div class="fr">
+    <div class="fg"><label class="fl">Watering</label><input type="text" class="fi" id="plantWatering" placeholder="e.g. Average"></div>
+    <div class="fg"><label class="fl">Sunlight</label><input type="text" class="fi" id="plantSunlight" placeholder="e.g. Full sun"></div>
+  </div>
+  <div class="fg">
+    <label class="fl">Description / Notes</label>
+    <textarea class="ft" id="plantNotes" placeholder="Growing notes, observations..."></textarea>
+  </div>
+  <div class="fg">
+    <label class="fl">Watch Out For These</label>
+    <textarea class="ft" id="plantWarnings" placeholder="Pests, problems (auto-populated)"></textarea>
+  </div>
+  <div class="fr">
+    <div class="fg"><label class="fl">Where From</label><input type="text" class="fi" id="plantSource" placeholder="Nursery..."></div>
+    <div class="fg"><label class="fl">Price Paid</label><input type="text" class="fi" id="plantPrice" placeholder="$0.00"></div>
+  </div>
+  <button class="form-submit" id="saveCardBtn">Add to Garden</button>
+  <button class="form-cancel" id="cancelBtn">Cancel</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+//  CONFIG
+// ═══════════════════════════════════════
+const PERENUAL_KEY = 'sk-UDuc69976c408262e14930';
+const PERENUAL_BASE = 'https://perenual.com/api';
+const STORAGE_KEY = 'gardendeck_plants';
+
+// ═══════════════════════════════════════
+//  LOCAL PLANT DATABASE (fallback + growing data)
+// ═══════════════════════════════════════
+const LOCAL_DB = {
+  'tomato':{sci:'Solanum lycopersicum',type:'annual',days:75,warn:'Hornworms, blossom end rot, early/late blight. Avoid overhead watering.',water:'Average',sun:'Full sun'},
+  'roma tomato':{sci:'Solanum lycopersicum "Roma"',type:'annual',days:75,warn:'Hornworms, blossom end rot, fusarium wilt. Determinate — fruits ripen at once.',water:'Average',sun:'Full sun'},
+  'cherry tomato':{sci:'Solanum lycopersicum var. cerasiforme',type:'annual',days:65,warn:'Prolific spreader. Hornworms, aphids, splitting after rain. Indeterminate.',water:'Average',sun:'Full sun'},
+  'pepper':{sci:'Capsicum annuum',type:'annual',days:70,warn:'Aphids, pepper maggots, blossom drop in heat >90F.',water:'Average',sun:'Full sun'},
+  'bell pepper':{sci:'Capsicum annuum (Group)',type:'annual',days:75,warn:'Aphids, sunscald. Green = unripe. Blossom drop above 90F.',water:'Average',sun:'Full sun'},
+  'jalapeno':{sci:'Capsicum annuum "Jalapeño"',type:'annual',days:72,warn:'Corking is normal/indicates heat. Hotter in dry conditions.',water:'Average',sun:'Full sun'},
+  'habanero':{sci:'Capsicum chinense "Habanero"',type:'annual',days:100,warn:'Long season. Extremely hot — wear gloves. Needs heat.',water:'Average',sun:'Full sun'},
+  'cucumber':{sci:'Cucumis sativus',type:'annual',days:58,warn:'Cucumber beetles, powdery mildew, bacterial wilt. Bitter if water-stressed.',water:'Frequent',sun:'Full sun'},
+  'zucchini':{sci:'Cucurbita pepo',type:'annual',days:50,warn:'Squash vine borers, powdery mildew. Harvest small. One plant = a LOT.',water:'Average',sun:'Full sun'},
+  'butternut squash':{sci:'Cucurbita moschata',type:'annual',days:110,warn:'Vine borers, powdery mildew. Needs space. Cure in sun.',water:'Average',sun:'Full sun'},
+  'pumpkin':{sci:'Cucurbita maxima',type:'annual',days:100,warn:'Vine borers, powdery mildew. Cardboard under fruit prevents rot.',water:'Average',sun:'Full sun'},
+  'lettuce':{sci:'Lactuca sativa',type:'annual',days:45,warn:'Bolts in heat. Aphids, slugs, rabbits. Shallow roots.',water:'Frequent',sun:'Part shade'},
+  'spinach':{sci:'Spinacia oleracea',type:'annual',days:40,warn:'Bolts fast in heat. Leaf miners, downy mildew. Cool season.',water:'Frequent',sun:'Part shade'},
+  'kale':{sci:'Brassica oleracea var. sabellica',type:'annual',days:55,warn:'Cabbage worms, aphids. Sweeter after frost. Harvest outer leaves.',water:'Average',sun:'Full sun'},
+  'carrot':{sci:'Daucus carota subsp. sativus',type:'biennial',days:70,warn:'Carrot rust fly, forked in rocky soil. Needs deep loose soil.',water:'Average',sun:'Full sun'},
+  'radish':{sci:'Raphanus sativus',type:'annual',days:25,warn:'Flea beetles. Fastest veggie. Goes pithy if left too long.',water:'Average',sun:'Full sun'},
+  'green bean':{sci:'Phaseolus vulgaris',type:'annual',days:55,warn:'Mexican bean beetle, rust. Direct sow after last frost.',water:'Average',sun:'Full sun'},
+  'pea':{sci:'Pisum sativum',type:'annual',days:60,warn:'Powdery mildew, aphids. Cool season. Needs trellis.',water:'Average',sun:'Full sun'},
+  'corn':{sci:'Zea mays',type:'annual',days:80,warn:'Corn earworm, raccoons. Plant in blocks for pollination.',water:'Average',sun:'Full sun'},
+  'potato':{sci:'Solanum tuberosum',type:'annual',days:90,warn:'Colorado potato beetle, late blight. Green parts = toxic.',water:'Average',sun:'Full sun'},
+  'sweet potato':{sci:'Ipomoea batatas',type:'annual',days:100,warn:'Weevils, whiteflies. Plant slips not seeds. Cure for storage.',water:'Average',sun:'Full sun'},
+  'garlic':{sci:'Allium sativum',type:'annual',days:240,warn:'Plant in fall. Stop watering 2 weeks before harvest. Cure 2-4 weeks.',water:'Minimum',sun:'Full sun'},
+  'onion':{sci:'Allium cepa',type:'biennial',days:100,warn:'Onion maggots, thrips. Day-length sensitive — pick right type for latitude.',water:'Average',sun:'Full sun'},
+  'basil':{sci:'Ocimum basilicum',type:'annual',days:28,warn:'Fusarium wilt, Japanese beetles. Pinch flowers. Dies at first frost.',water:'Average',sun:'Full sun'},
+  'cilantro':{sci:'Coriandrum sativum',type:'annual',days:30,warn:'Bolts fast. Succession plant every 2-3 weeks. Let some bolt for coriander.',water:'Average',sun:'Part shade'},
+  'mint':{sci:'Mentha spp.',type:'perennial',days:30,warn:'INVASIVE. Container only or it takes over. Spreads by runners.',water:'Frequent',sun:'Part shade'},
+  'rosemary':{sci:'Salvia rosmarinus',type:'perennial',days:90,warn:'Root rot from overwatering. Needs excellent drainage. Does not like wet feet.',water:'Minimum',sun:'Full sun'},
+  'thyme':{sci:'Thymus vulgaris',type:'perennial',days:70,warn:'Root rot in wet soil. Very drought tolerant. Prune after flowering.',water:'Minimum',sun:'Full sun'},
+  'oregano':{sci:'Origanum vulgare',type:'perennial',days:45,warn:'Can become woody. More flavorful when slightly drought stressed.',water:'Minimum',sun:'Full sun'},
+  'parsley':{sci:'Petroselinum crispum',type:'biennial',days:75,warn:'Swallowtail caterpillars — leave them, they become butterflies.',water:'Average',sun:'Full sun'},
+  'sage':{sci:'Salvia officinalis',type:'perennial',days:75,warn:'Root rot, powdery mildew. Replace every 3-4 years.',water:'Minimum',sun:'Full sun'},
+  'strawberry':{sci:'Fragaria × ananassa',type:'perennial',days:60,warn:'Birds (use netting), slugs, gray mold. Runners spread aggressively.',water:'Frequent',sun:'Full sun'},
+  'blueberry':{sci:'Vaccinium corymbosum',type:'perennial',days:365,warn:'Needs acidic soil pH 4.5-5.5. Birds. Takes 2-3 years to produce.',water:'Frequent',sun:'Full sun'},
+  'watermelon':{sci:'Citrullus lanatus',type:'annual',days:85,warn:'Fusarium wilt, aphids. Thump test — should sound hollow.',water:'Average',sun:'Full sun'},
+  'eggplant':{sci:'Solanum melongena',type:'annual',days:70,warn:'Flea beetles (worst pest). Needs heat. Harvest before skin dulls.',water:'Average',sun:'Full sun'},
+  'broccoli':{sci:'Brassica oleracea var. italica',type:'annual',days:65,warn:'Cabbage worms/loopers. Cool season. Harvest before flowers open.',water:'Frequent',sun:'Full sun'},
+  'cauliflower':{sci:'Brassica oleracea var. botrytis',type:'annual',days:75,warn:'Fussier than broccoli. Blanch by tying leaves over head. Bolts in heat.',water:'Frequent',sun:'Full sun'},
+  'sunflower':{sci:'Helianthus annuus',type:'annual',days:70,warn:'Birds, squirrels, rust. Allelopathic. Attracts pollinators.',water:'Average',sun:'Full sun'},
+  'lavender':{sci:'Lavandula angustifolia',type:'perennial',days:90,warn:'Root rot from overwatering. Excellent drainage. Deer resistant.',water:'Minimum',sun:'Full sun'},
+  'okra':{sci:'Abelmoschus esculentus',type:'annual',days:55,warn:'Loves heat. Harvest young or pods get woody. Spines irritate skin.',water:'Average',sun:'Full sun'},
+  'beet':{sci:'Beta vulgaris',type:'biennial',days:55,warn:'Leaf miners. Roots and greens both edible. Soak overnight to germinate faster.',water:'Average',sun:'Full sun'},
+  'swiss chard':{sci:'Beta vulgaris subsp. vulgaris',type:'biennial',days:55,warn:'Leaf miners, slugs. Heat tolerant. Cut-and-come-again.',water:'Average',sun:'Full sun'},
+  'dill':{sci:'Anethum graveolens',type:'annual',days:40,warn:'Swallowtail caterpillars. Self-seeds. Companion to tomatoes.',water:'Average',sun:'Full sun'},
+  'chive':{sci:'Allium schoenoprasum',type:'perennial',days:60,warn:'Nearly indestructible. Flowers attract pollinators. Divide every few years.',water:'Average',sun:'Full sun'},
+  'marigold':{sci:'Tagetes spp.',type:'annual',days:50,warn:'Natural pest deterrent — plant near vegetables. Deadhead for blooms.',water:'Average',sun:'Full sun'},
+};
+
+function normalizeName(n){return n.toLowerCase().trim().replace(/s$/,'').replace(/['']/g,'');}
+
+function lookupLocal(name){
+  const n = normalizeName(name);
+  if(LOCAL_DB[n]) return LOCAL_DB[n];
+  for(const[k,v]of Object.entries(LOCAL_DB)){if(n.includes(k)||k.includes(n))return v;}
+  const words = n.split(/\s+/);
+  for(const w of words){if(w.length<3)continue;for(const[k,v]of Object.entries(LOCAL_DB)){if(k.includes(w))return v;}}
+  return null;
+}
+
+// ═══════════════════════════════════════
+//  PERENUAL API
+// ═══════════════════════════════════════
+async function searchPerenual(query){
+  try{
+    const r = await fetch(`${PERENUAL_BASE}/species-list?key=${PERENUAL_KEY}&q=${encodeURIComponent(query)}`);
+    if(!r.ok) return null;
+    const data = await r.json();
+    if(data.data && data.data.length > 0) return data.data[0];
+  }catch(e){console.error('Perenual search error:',e);}
+  return null;
+}
+
+async function getPerenualDetails(id){
+  try{
+    const r = await fetch(`${PERENUAL_BASE}/species/details/${id}?key=${PERENUAL_KEY}`);
+    if(!r.ok) return null;
+    return await r.json();
+  }catch(e){console.error('Perenual details error:',e);}
+  return null;
+}
+
+// ═══════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════
+let deck = loadDeck();
+let currentPhoto = null;
+let editingId = null;
+let currentFlipped = false;
+
+function loadDeck(){try{const d=localStorage.getItem(STORAGE_KEY);return d?JSON.parse(d):[];}catch{return[];}}
+function saveDeck(d){localStorage.setItem(STORAGE_KEY,JSON.stringify(d));}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function formatDate(s){if(!s)return'';const d=new Date(s+'T00:00:00');return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');document.getElementById('deckViewBtn').classList.toggle('active',id==='deckView');}
+
+// ═══════════════════════════════════════
+//  DECK VIEW
+// ═══════════════════════════════════════
+function renderDeck(){
+  const grid=document.getElementById('deckGrid'),empty=document.getElementById('deckEmpty'),stats=document.getElementById('deckStats');
+  if(!deck.length){grid.style.display='none';empty.style.display='block';stats.textContent='0 plants in garden';return;}
+  grid.style.display='grid';empty.style.display='none';
+  const a=deck.filter(p=>p.type==='annual').length,pe=deck.filter(p=>p.type==='perennial').length;
+  stats.textContent=`${deck.length} plant${deck.length!==1?'s':''}`+(a?` · ${a} annual${a!==1?'s':''}`:'')+((pe)?` · ${pe} perennial${pe!==1?'s':''}`:``);
+  grid.innerHTML=deck.map(p=>{
+    const img = p.photo || p.apiImage || '';
+    return `<div class="mini-card" onclick="viewCard('${p.id}')">
+      ${img?`<img class="mini-card-img" src="${img}" alt="${p.name}">`:`<div class="mini-card-img ph">🌱</div>`}
+      <div class="mini-card-info">
+        <div class="mini-card-name">${p.name}</div>
+        <div class="mini-card-sci">${p.sciName||''}</div>
+        ${p.estHarvest?`<div class="mini-card-harvest">🗓 ${formatDate(p.estHarvest)}</div>`:''}
+      </div></div>`;
+  }).join('');
+}
+
+// ═══════════════════════════════════════
+//  CARD DETAIL — FRONT & BACK WITH FLIP
+// ═══════════════════════════════════════
+function viewCard(id){
+  const p=deck.find(x=>x.id===id);if(!p)return;
+  currentFlipped=false;
+  const img=p.photo||p.apiImage||'';
+  const typeBadge=p.type?`<span class="badge badge-${p.type}">${p.type}</span>`:'';
+  const logs=p.logs||{water:[],harvest:[],notes:[]};
+
+  const c=document.getElementById('cardDetailView');
+  c.innerHTML=`
+  <div class="card-scene">
+    <div class="card-flipper" id="cardFlipper">
+      <!-- FRONT -->
+      <div class="card-face card-front">
+        <div class="card-header">
+          <div class="card-name">${p.name}</div>
+          ${p.daysToHarvest?`<div class="card-cost">${p.daysToHarvest}d</div>`:''}
+        </div>
+        <div class="card-image-frame">
+          ${img?`<img src="${img}" alt="${p.name}">`:`<div class="card-image-placeholder"><span>🌱</span>No photo</div>`}
+        </div>
+        <div class="card-type-line">
+          <span class="card-scientific">${p.sciName||'Unknown species'}${p.family?' · '+p.family:''}</span>
+          ${typeBadge}
+        </div>
+        <div class="card-rules">
+          <div class="card-dates">
+            <div class="cd-item"><span class="cd-label">Planted</span><span class="cd-value">${p.datePlanted?formatDate(p.datePlanted):'—'}</span></div>
+            <div class="cd-item"><span class="cd-label">Est. Harvest</span><span class="cd-value harvest">${p.estHarvest?formatDate(p.estHarvest):'—'}</span></div>
+          </div>
+          ${p.notes?`<div class="card-notes">${p.notes}</div>`:''}
+        </div>
+        ${p.warnings?`<div class="card-warnings"><div class="card-warnings-title">Watch Out For These</div><div class="card-warnings-text">${p.warnings}</div></div>`:''}
+        <div class="card-footer">
+          <span class="card-source">${p.source||'—'}</span>
+          <span class="card-price">${p.price||'—'}</span>
+        </div>
+      </div>
+      <!-- BACK -->
+      <div class="card-face card-back">
+        <div class="back-header">
+          <div class="back-title">${p.name}</div>
+          <div class="card-cost">LOG</div>
+        </div>
+        ${(p.watering||p.sunlight)?`<div class="care-grid">
+          ${p.watering?`<div class="care-item"><div class="care-icon">💧</div><div class="care-label">Water</div><div class="care-value">${p.watering}</div></div>`:''}
+          ${p.sunlight?`<div class="care-item"><div class="care-icon">☀️</div><div class="care-label">Sun</div><div class="care-value">${p.sunlight}</div></div>`:''}
+          ${p.family?`<div class="care-item"><div class="care-icon">🌿</div><div class="care-label">Family</div><div class="care-value">${p.family}</div></div>`:''}
+        </div>`:''}
+        <div class="log-section">
+          <div class="log-section-title">💧 Watering Log</div>
+          <div class="log-entries" id="waterLog">${logs.water.length?logs.water.map(e=>`<div class="log-entry"><span class="log-entry-date">${formatDate(e.date)}</span><span class="log-entry-text">${e.note||'Watered'}</span></div>`).join(''):`<div class="log-empty">No entries yet</div>`}</div>
+          <div class="log-add-row">
+            <input type="date" id="waterDate" class="fi">
+            <button class="log-add-btn" onclick="addLog('${id}','water')">+ Water</button>
+          </div>
+        </div>
+        <div class="log-section">
+          <div class="log-section-title">🌾 Harvest Log</div>
+          <div class="log-entries" id="harvestLog">${logs.harvest.length?logs.harvest.map(e=>`<div class="log-entry"><span class="log-entry-date">${formatDate(e.date)}</span><span class="log-entry-text">${e.note||''}</span><span class="log-entry-val">${e.amount||''}</span></div>`).join(''):`<div class="log-empty">No harvests yet</div>`}</div>
+          <div class="log-add-row">
+            <input type="date" id="harvestDate" class="fi">
+            <input type="text" id="harvestAmt" class="fi" placeholder="Amount">
+            <button class="log-add-btn" onclick="addLog('${id}','harvest')">+ Log</button>
+          </div>
+        </div>
+        <div class="log-section">
+          <div class="log-section-title">📝 Notes Log</div>
+          <div class="log-entries" id="notesLog">${logs.notes.length?logs.notes.map(e=>`<div class="log-entry"><span class="log-entry-date">${formatDate(e.date)}</span><span class="log-entry-text">${e.note}</span></div>`).join(''):`<div class="log-empty">No notes yet</div>`}</div>
+          <div class="log-add-row">
+            <input type="text" id="noteText" class="fi" placeholder="Note...">
+            <button class="log-add-btn" onclick="addLog('${id}','notes')">+ Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-actions">
+    <button class="ca-btn" onclick="editCard('${id}')">Edit</button>
+    <button class="ca-btn flip-btn" onclick="flipCard()">↩️ Flip</button>
+    <button class="ca-btn" onclick="showView('deckView')">Back</button>
+    <button class="ca-btn del" onclick="deleteCard('${id}')">Del</button>
+  </div>`;
+  showView('cardDetailView');
+}
+
+function flipCard(){
+  currentFlipped=!currentFlipped;
+  document.getElementById('cardFlipper').classList.toggle('flipped',currentFlipped);
+}
+
+function addLog(id,type){
+  const p=deck.find(x=>x.id===id);if(!p)return;
+  if(!p.logs)p.logs={water:[],harvest:[],notes:[]};
+  const today=new Date().toISOString().split('T')[0];
+  if(type==='water'){
+    const d=document.getElementById('waterDate').value||today;
+    p.logs.water.unshift({date:d,note:'Watered'});
+  }else if(type==='harvest'){
+    const d=document.getElementById('harvestDate').value||today;
+    const a=document.getElementById('harvestAmt').value;
+    p.logs.harvest.unshift({date:d,amount:a,note:''});
+  }else if(type==='notes'){
+    const n=document.getElementById('noteText').value;
+    if(!n)return;
+    p.logs.notes.unshift({date:today,note:n});
+  }
+  saveDeck(deck);
+  viewCard(id);
+  showToast('Log updated');
+}
+
+function editCard(id){
+  const p=deck.find(x=>x.id===id);if(!p)return;
+  editingId=id;
+  document.getElementById('plantName').value=p.name||'';
+  document.getElementById('sciName').value=p.sciName||'';
+  document.getElementById('plantFamily').value=p.family||'';
+  document.getElementById('plantType').value=p.type||'';
+  document.getElementById('datePlanted').value=p.datePlanted||'';
+  document.getElementById('estHarvest').value=p.estHarvest||'';
+  document.getElementById('daysToHarvest').value=p.daysToHarvest||'';
+  document.getElementById('plantWatering').value=p.watering||'';
+  document.getElementById('plantSunlight').value=p.sunlight||'';
+  document.getElementById('plantNotes').value=p.notes||'';
+  document.getElementById('plantWarnings').value=p.warnings||'';
+  document.getElementById('plantSource').value=p.source||'';
+  document.getElementById('plantPrice').value=p.price||'';
+  currentPhoto=p.photo||null;
+  const u=document.getElementById('photoUpload'),t=document.getElementById('photoUploadText');
+  if(currentPhoto){let img=u.querySelector('img');if(!img){img=document.createElement('img');u.appendChild(img);}img.src=currentPhoto;t.style.display='none';}
+  document.getElementById('saveCardBtn').textContent='Update Card';
+  document.querySelector('.create-title').textContent='Edit Card';
+  showView('createView');
+}
+
+function deleteCard(id){
+  if(!confirm('Remove this plant?'))return;
+  deck=deck.filter(p=>p.id!==id);saveDeck(deck);renderDeck();showView('deckView');showToast('Removed');
+}
+
+// ═══════════════════════════════════════
+//  CREATE / LOOKUP
+// ═══════════════════════════════════════
+async function doLookup(){
+  const name=document.getElementById('plantName').value.trim();
+  if(!name){showToast('Enter a plant name first');return;}
+  const btn=document.getElementById('lookupBtn');
+  btn.classList.add('loading');btn.disabled=true;
+
+  // 1. Try Perenual API
+  let apiData=null;
+  const searchResult=await searchPerenual(name);
+  if(searchResult){
+    apiData=searchResult;
+    // If in free range (id <= 3000), get details
+    if(searchResult.id<=3000){
+      const details=await getPerenualDetails(searchResult.id);
+      if(details)apiData={...apiData,...details};
+    }
+  }
+
+  // 2. Get local data for growing info
+  const local=lookupLocal(name);
+
+  // 3. Merge: API wins for sci name/family/image, local wins for growing data
+  const sciName=apiData?.scientific_name?.[0]||local?.sci||'';
+  const family=apiData?.family||'';
+  const type=local?.type||apiData?.cycle?.toLowerCase()||'';
+  const days=local?.days||'';
+  const warnings=local?.warn||'';
+  const watering=local?.water||apiData?.watering||'';
+  const sunlight=local?.sun||(Array.isArray(apiData?.sunlight)?apiData.sunlight.join(', '):apiData?.sunlight||'');
+
+  // Fill form
+  if(sciName){document.getElementById('sciName').value=sciName;document.getElementById('sciName').classList.add('auto-pop');}
+  if(family){document.getElementById('plantFamily').value=family;document.getElementById('plantFamily').classList.add('auto-pop');}
+  if(type)document.getElementById('plantType').value=type;
+  if(days){document.getElementById('daysToHarvest').value=days;document.getElementById('daysToHarvest').classList.add('auto-pop');recalcHarvest();}
+  if(warnings){document.getElementById('plantWarnings').value=warnings;document.getElementById('plantWarnings').classList.add('auto-pop');}
+  if(watering){document.getElementById('plantWatering').value=watering;document.getElementById('plantWatering').classList.add('auto-pop');}
+  if(sunlight){document.getElementById('plantSunlight').value=sunlight;document.getElementById('plantSunlight').classList.add('auto-pop');}
+
+  // Show API image preview if available
+  const apiImg=apiData?.default_image?.regular_url||apiData?.default_image?.medium_url||'';
+  const preview=document.getElementById('apiImgPreview');
+  if(apiImg && !isUpgradeString(apiImg)){
+    document.getElementById('apiImgEl').src=apiImg;
+    preview.classList.add('active');
+    // Store for card
+    currentApiImage=apiImg;
+  }else{
+    preview.classList.remove('active');
+    currentApiImage=null;
+  }
+
+  const hint=document.getElementById('lookupHint');
+  if(sciName||local){
+    hint.textContent=`✓ Found: ${sciName||name}`;hint.style.color='#7ab556';
+    showToast(sciName?`Found: ${sciName}`:'Local data loaded');
+  }else{
+    hint.textContent='Not found. Enter details manually.';hint.style.color='#c45a4a';
+    showToast('Not found — enter manually');
+  }
+  btn.classList.remove('loading');btn.disabled=false;
+}
+
+function isUpgradeString(s){return typeof s==='string'&&s.includes('Upgrade');}
+
+let currentApiImage=null;
+
+function recalcHarvest(){
+  const dp=document.getElementById('datePlanted').value;
+  const days=parseInt(document.getElementById('daysToHarvest').value);
+  if(dp&&days){const d=new Date(dp);d.setDate(d.getDate()+days);document.getElementById('estHarvest').value=d.toISOString().split('T')[0];}
+}
+
+function resetForm(){
+  editingId=null;currentPhoto=null;currentApiImage=null;
+  ['plantName','sciName','plantFamily','datePlanted','estHarvest','daysToHarvest','plantWatering','plantSunlight','plantNotes','plantWarnings','plantSource','plantPrice'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('plantType').value='';
+  const u=document.getElementById('photoUpload'),img=u.querySelector('img');if(img)img.remove();
+  document.getElementById('photoUploadText').style.display='';
+  document.getElementById('apiImgPreview').classList.remove('active');
+  document.querySelectorAll('.auto-pop').forEach(el=>{if(el.id!=='estHarvest')el.classList.remove('auto-pop');});
+  document.getElementById('saveCardBtn').textContent='Add to Garden';
+  document.querySelector('.create-title').textContent='Plant a New Card';
+  document.getElementById('lookupHint').textContent='Enter a plant name, then search';
+  document.getElementById('lookupHint').style.color='';
+}
+
+function saveCard(){
+  const name=document.getElementById('plantName').value.trim();
+  if(!name){showToast('Enter a plant name');return;}
+  const existing=editingId?deck.find(p=>p.id===editingId):null;
+  const plant={
+    id:editingId||'plant_'+Date.now(),
+    name,
+    sciName:document.getElementById('sciName').value.trim(),
+    family:document.getElementById('plantFamily').value.trim(),
+    type:document.getElementById('plantType').value,
+    datePlanted:document.getElementById('datePlanted').value,
+    estHarvest:document.getElementById('estHarvest').value,
+    daysToHarvest:document.getElementById('daysToHarvest').value,
+    watering:document.getElementById('plantWatering').value.trim(),
+    sunlight:document.getElementById('plantSunlight').value.trim(),
+    notes:document.getElementById('plantNotes').value.trim(),
+    warnings:document.getElementById('plantWarnings').value.trim(),
+    source:document.getElementById('plantSource').value.trim(),
+    price:document.getElementById('plantPrice').value.trim(),
+    photo:currentPhoto,
+    apiImage:currentApiImage||existing?.apiImage||null,
+    logs:existing?.logs||{water:[],harvest:[],notes:[]},
+    createdAt:existing?.createdAt||new Date().toISOString(),
+    updatedAt:new Date().toISOString(),
+  };
+  if(editingId){const i=deck.findIndex(p=>p.id===editingId);if(i>=0)deck[i]=plant;}else deck.push(plant);
+  saveDeck(deck);renderDeck();resetForm();showView('deckView');showToast(editingId?'Updated':'Added to garden');
+}
+
+// ═══════════════════════════════════════
+//  PHOTO
+// ═══════════════════════════════════════
+function handlePhoto(file){
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const img=new Image();
+    img.onload=function(){
+      const canvas=document.createElement('canvas');
+      const max=600;let w=img.width,h=img.height;
+      if(w>h){if(w>max){h*=max/w;w=max;}}else{if(h>max){w*=max/h;h=max;}}
+      canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);
+      currentPhoto=canvas.toDataURL('image/jpeg',0.7);
+      const u=document.getElementById('photoUpload');
+      let pimg=u.querySelector('img');if(!pimg){pimg=document.createElement('img');u.appendChild(pimg);}
+      pimg.src=currentPhoto;document.getElementById('photoUploadText').style.display='none';
+    };img.src=e.target.result;
+  };reader.readAsDataURL(file);
+}
+
+// ═══════════════════════════════════════
+//  CSV EXPORT
+// ═══════════════════════════════════════
+function exportCSV(){
+  if(!deck.length){showToast('No plants');return;}
+  const h=['Name','Scientific Name','Family','Type','Date Planted','Est. Harvest','Days','Watering','Sunlight','Notes','Warnings','Source','Price','Water Logs','Harvest Logs'];
+  const rows=deck.map(p=>[p.name,p.sciName,p.family,p.type,p.datePlanted,p.estHarvest,p.daysToHarvest,p.watering,p.sunlight,
+    `"${(p.notes||'').replace(/"/g,'""')}"`,`"${(p.warnings||'').replace(/"/g,'""')}"`,p.source,p.price,
+    (p.logs?.water||[]).length,(p.logs?.harvest||[]).length]);
+  const csv=[h.join(','),...rows.map(r=>r.join(','))].join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`gardendeck_${new Date().toISOString().split('T')[0]}.csv`;a.click();
+  URL.revokeObjectURL(url);showToast('CSV exported');
+}
+
+// ═══════════════════════════════════════
+//  EVENT BINDINGS
+// ═══════════════════════════════════════
+document.getElementById('addCardBtn').addEventListener('click',()=>{resetForm();showView('createView');});
+document.getElementById('deckViewBtn').addEventListener('click',()=>showView('deckView'));
+document.getElementById('lookupBtn').addEventListener('click',doLookup);
+document.getElementById('datePlanted').addEventListener('change',recalcHarvest);
+document.getElementById('daysToHarvest').addEventListener('input',recalcHarvest);
+document.getElementById('photoUpload').addEventListener('click',()=>document.getElementById('photoInput').click());
+document.getElementById('photoInput').addEventListener('change',e=>handlePhoto(e.target.files[0]));
+document.getElementById('saveCardBtn').addEventListener('click',saveCard);
+document.getElementById('cancelBtn').addEventListener('click',()=>{resetForm();showView('deckView');});
+document.getElementById('exportBtn').addEventListener('click',exportCSV);
+document.getElementById('plantName').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doLookup();}});
+
+// ═══════════════════════════════════════
+//  PWA SERVICE WORKER REGISTRATION
+// ═══════════════════════════════════════
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
+
+// ═══════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════
+renderDeck();
+</script>
+</body>
+</html>
