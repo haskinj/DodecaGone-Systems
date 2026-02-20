@@ -2,7 +2,7 @@
   "name": "GardenDeck",
   "short_name": "GardenDeck",
   "description": "Garden tracker — your plants as Magic cards",
-  "start_url": "dodecagone.net/garden/",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#1a1a18",
   "theme_color": "#1a1a18",
