@@ -216,6 +216,78 @@
   .footer-mark { font-family: var(--mono); font-size: 16px; color: var(--accent); letter-spacing: 4px; }
   .footer-gnu { font-family: var(--mono); font-size: 9px; color: var(--text-dim); letter-spacing: 1px; }
 
+  /* ── DOWNLOADS SECTION ── */
+  .download-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .dl-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .dl-item:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+  }
+
+  .dl-icon {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    flex-shrink: 0;
+    min-width: 44px;
+    text-align: center;
+  }
+
+  .dl-icon-pdf { color: var(--red); border-color: rgba(232, 136, 136, 0.2); }
+  .dl-icon-py { color: var(--blue); border-color: rgba(136, 180, 231, 0.2); }
+  .dl-icon-html { color: var(--orange); border-color: rgba(232, 184, 124, 0.2); }
+
+  .dl-info { flex: 1; min-width: 0; }
+
+  .dl-name {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .dl-desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .dl-arrow {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+
+  .dl-item:hover .dl-arrow {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
   @media (max-width: 768px) {
     nav { padding: 16px 20px; }
     .nav-links { gap: 16px; }
@@ -348,7 +420,7 @@
 <div class="category">
   <div class="cat-header">
     <h2 class="cat-title">Wonkys</h2>
-    <span class="cat-count">Experimental software artifacts</span>
+    <span class="cat-count">Experimental software artifacts — deliberately useless, accidentally load-bearing</span>
   </div>
   <div class="project-grid">
     <div class="project">
@@ -440,6 +512,281 @@
         <span class="project-tag">css</span>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ══ APPS ══ -->
+<div class="category">
+  <div class="cat-header">
+    <h2 class="cat-title">Apps & Tools</h2>
+    <span class="cat-count">Things that do things</span>
+  </div>
+  <div class="project-grid">
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">GardenDeck</span>
+        <span class="project-lang lang-html">HTML</span>
+      </div>
+      <p class="project-desc">
+        Garden tracker that presents your plants as Magic: The Gathering cards.
+        Auto-populates scientific names and growing data via Perenual API. Card flip
+        reveals maintenance logs. PWA-ready.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">pwa</span>
+        <span class="project-tag">api</span>
+        <span class="project-tag">mtg-aesthetic</span>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">WonkyPad</span>
+        <span class="project-lang lang-python">Python</span>
+      </div>
+      <p class="project-desc">
+        Text editor with Win95 aesthetic. Syntax highlighting, auto-close brackets,
+        and 13 wonky text transforms including Sarcasm Case, uwu, and Zalgo. Because
+        developer tools should respect users.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">tkinter</span>
+        <span class="project-tag">editor</span>
+        <span class="project-tag">win95</span>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">UselessTracker</span>
+        <span class="project-lang lang-html">HTML</span>
+      </div>
+      <p class="project-desc">
+        An app that tracks itself. Measures whether it's installed (yes), whether
+        it's open (yes), session duration, and button presses. Embedded AI observer
+        provides philosophical commentary via Claude API.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">self-referential</span>
+        <span class="project-tag">claude-api</span>
+        <span class="project-tag">csv-export</span>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">KairosFileSifter</span>
+        <span class="project-lang lang-python">Python</span>
+      </div>
+      <p class="project-desc">
+        File organization utility. Sifts, sorts, and manages files with a focus
+        on getting things where they belong without fuss.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">utility</span>
+        <span class="project-tag">files</span>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">Smoosher</span>
+        <span class="project-lang lang-python">Python</span>
+      </div>
+      <p class="project-desc">
+        Text compressor and manipulator. Version 2. Smooshes things together
+        that probably shouldn't be smooshed.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">text</span>
+        <span class="project-tag">utility</span>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">RockSimQT</span>
+        <span class="project-lang lang-python">Python</span>
+      </div>
+      <p class="project-desc">
+        Rock simulation. Qt interface. Rocks do what rocks do, which is
+        mostly just sit there. Compellingly.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">simulation</span>
+        <span class="project-tag">qt</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MORE WONKYS ══ -->
+<div class="category">
+  <div class="cat-header">
+    <h2 class="cat-title">More Wonkys</h2>
+    <span class="cat-count">The collection grows</span>
+  </div>
+  <div class="project-grid">
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">RaveSafe.cob</span>
+        <span class="project-lang lang-cobol">COBOL</span>
+      </div>
+      <p class="project-desc">
+        Harm reduction guide for raves — written in COBOL with 24-bit ANSI rainbow
+        gradient output. 10 safety rules including hydration, buddy system, consent,
+        and fentanyl testing. Character-by-character color cycling.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">cobol</span>
+        <span class="project-tag">harm-reduction</span>
+        <span class="project-tag">ansi-color</span>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">Win95 FlipFall</span>
+        <span class="project-lang lang-html">HTML</span>
+      </div>
+      <p class="project-desc">
+        Windows 95 desktop simulation where everything flips and falls apart.
+        Gravity wins. You don't.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">win95</span>
+        <span class="project-tag">animation</span>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">Win95 Repulsor</span>
+        <span class="project-lang lang-html">HTML</span>
+      </div>
+      <p class="project-desc">
+        Windows 95 interface where desktop elements repel your cursor.
+        The harder you try, the more they flee.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">win95</span>
+        <span class="project-tag">physics</span>
+        <span class="project-tag">interaction</span>
+      </div>
+    </div>
+    <div class="project">
+      <div class="project-top">
+        <span class="project-name">SOUL_RADIO Audio</span>
+        <span class="project-lang lang-python">Python</span>
+      </div>
+      <p class="project-desc">
+        Python implementation of the SOUL_RADIO synthesizer. Waveform generation
+        and audio output from the command line.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">audio</span>
+        <span class="project-tag">synth</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DOWNLOADS ══ -->
+<div class="category">
+  <div class="cat-header">
+    <h2 class="cat-title">Downloads</h2>
+    <span class="cat-count">Free — take what you need</span>
+  </div>
+  <div class="download-grid">
+    <a href="downloads/forensic_absolution.pdf" class="dl-item">
+      <span class="dl-icon dl-icon-pdf">PDF</span>
+      <div class="dl-info">
+        <div class="dl-name">Forensic Absolution</div>
+        <div class="dl-desc">Framework for eliminating recursive shame processing</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/uselesstracker.html" class="dl-item">
+      <span class="dl-icon dl-icon-html">HTML</span>
+      <div class="dl-info">
+        <div class="dl-name">UselessTracker</div>
+        <div class="dl-desc">Self-referential app with AI observer</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/wonkypad.py" class="dl-item">
+      <span class="dl-icon dl-icon-py">PY</span>
+      <div class="dl-info">
+        <div class="dl-name">WonkyPad</div>
+        <div class="dl-desc">Win95 text editor with 13 wonky transforms</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/progresspanic2.py" class="dl-item">
+      <span class="dl-icon dl-icon-py">PY</span>
+      <div class="dl-info">
+        <div class="dl-name">progresspanic2.py</div>
+        <div class="dl-desc">A loading bar that panics at 85% and creates haunted files</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/entropic_hostility.html" class="dl-item">
+      <span class="dl-icon dl-icon-html">HTML</span>
+      <div class="dl-info">
+        <div class="dl-name">Entropic Atomic Hostility</div>
+        <div class="dl-desc">Win95 seismograph that outputs nine instances of "help"</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/win95melter.html" class="dl-item">
+      <span class="dl-icon dl-icon-html">HTML</span>
+      <div class="dl-info">
+        <div class="dl-name">Win95 Melting Folders</div>
+        <div class="dl-desc">My Computer but the icons progressively melt</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/win95flipfall.html" class="dl-item">
+      <span class="dl-icon dl-icon-html">HTML</span>
+      <div class="dl-info">
+        <div class="dl-name">Win95 FlipFall</div>
+        <div class="dl-desc">Everything flips and falls. Gravity wins.</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/win95repulsor.html" class="dl-item">
+      <span class="dl-icon dl-icon-html">HTML</span>
+      <div class="dl-info">
+        <div class="dl-name">Win95 Repulsor</div>
+        <div class="dl-desc">Desktop elements flee from your cursor</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/SOUL_RADIOAUDIO.py" class="dl-item">
+      <span class="dl-icon dl-icon-py">PY</span>
+      <div class="dl-info">
+        <div class="dl-name">SOUL_RADIO Audio</div>
+        <div class="dl-desc">Python waveform synthesizer</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/__RockSimQT.py" class="dl-item">
+      <span class="dl-icon dl-icon-py">PY</span>
+      <div class="dl-info">
+        <div class="dl-name">RockSimQT</div>
+        <div class="dl-desc">Rock simulation. Rocks sit there. Compellingly.</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/kairosfilesifter.py" class="dl-item">
+      <span class="dl-icon dl-icon-py">PY</span>
+      <div class="dl-info">
+        <div class="dl-name">KairosFileSifter</div>
+        <div class="dl-desc">File organization utility</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
+    <a href="downloads/smoosher2.py" class="dl-item">
+      <span class="dl-icon dl-icon-py">PY</span>
+      <div class="dl-info">
+        <div class="dl-name">Smoosher v2</div>
+        <div class="dl-desc">Text compressor and manipulator</div>
+      </div>
+      <span class="dl-arrow">→</span>
+    </a>
   </div>
 </div>
 
