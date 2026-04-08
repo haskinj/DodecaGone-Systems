@@ -20,10 +20,6 @@
     --accent-glow: rgba(200, 168, 124, 0.06);
     --border: rgba(255, 255, 255, 0.06);
     --border-hover: rgba(200, 168, 124, 0.2);
-    --green: #a8e6cf;
-    --blue: #88b4e7;
-    --orange: #e8b87c;
-    --red: #e88888;
     --serif: 'Playfair Display', Georgia, serif;
     --sans: 'DM Sans', -apple-system, sans-serif;
     --mono: 'IBM Plex Mono', 'Menlo', monospace;
@@ -41,7 +37,6 @@
     min-height: 100vh;
   }
 
-  /* Noise overlay */
   body::after {
     content: '';
     position: fixed;
@@ -54,14 +49,53 @@
   a { color: var(--accent); text-decoration: none; transition: all 0.3s ease; }
   a:hover { color: var(--text-primary); }
 
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(12, 12, 14, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-mark {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    font-weight: 500;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+
   /* ── HERO ── */
   .hero {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 55vh;
-    padding: 80px 8vw 40px;
+    padding: 140px 8vw 60px;
     text-align: center;
     position: relative;
   }
@@ -78,7 +112,7 @@
 
   .hero-title {
     font-family: var(--serif);
-    font-size: clamp(36px, 6vw, 72px);
+    font-size: clamp(48px, 8vw, 96px);
     font-weight: 900;
     line-height: 1.05;
     margin-bottom: 12px;
@@ -88,7 +122,7 @@
 
   .hero-sub {
     font-family: var(--sans);
-    font-size: clamp(14px, 2vw, 18px);
+    font-size: clamp(16px, 2.5vw, 22px);
     color: var(--text-secondary);
     margin-bottom: 8px;
     opacity: 0;
@@ -97,7 +131,7 @@
 
   .hero-tag {
     font-family: var(--mono);
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--text-dim);
@@ -106,471 +140,227 @@
     animation: fadeIn 0.8s ease 0.8s forwards;
   }
 
-  .hero-line {
-    width: 60px;
-    height: 1px;
-    background: var(--accent);
-    margin: 28px auto 0;
+  /* ── DOWNLOADS SECTION ── */
+  .downloads {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto 60px;
+    padding: 0 8vw;
+    animation: fadeIn 0.8s ease 1s forwards;
     opacity: 0;
-    animation: fadeIn 0.8s ease 1s forwards, lineGrow 0.8s ease 1s forwards;
   }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+  .dl-main {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(200, 168, 124, 0.08) 100%);
+    border: 1px solid var(--accent);
+    padding: 40px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
   }
-  @keyframes lineGrow {
-    from { width: 0; }
-    to { width: 60px; }
+  .dl-main:hover {
+    background: linear-gradient(135deg, var(--bg-card-hover) 0%, rgba(200, 168, 124, 0.12) 100%);
+    transform: translateY(-2px);
+  }
+  .dl-main h2 { font-family: var(--serif); font-size: 36px; margin-bottom: 10px; color: var(--accent); }
+  .dl-main p { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; }
+  .btn {
+    display: inline-block;
+    font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
+    padding: 16px 32px; background: var(--accent); color: #000; font-weight: 700;
+  }
+  .btn:hover { background: #fff; color: #000; }
+
+  .dl-secondary-row {
+    display: flex; gap: 20px; width: 100%; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .dl-sec {
+    flex: 1; min-width: 280px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    padding: 24px; text-align: center;
+  }
+  .dl-sec:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+  .dl-sec h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 10px; }
+  .dl-sec a.btn-outline {
+    display: inline-block; margin-top: 10px;
+    font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+    padding: 10px 20px; border: 1px solid var(--accent); color: var(--accent);
+  }
+  .dl-sec a.btn-outline:hover { background: var(--accent-dim); }
+
+  /* ── MEDIA SECTION ── */
+  .media-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 0 8vw;
+  }
+  
+  .media-placeholder {
+    background: var(--bg-secondary);
+    border: 1px dashed var(--border-hover);
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--text-dim);
+  }
+  
+  .media-placeholder .icon {
+    font-size: 32px; margin-bottom: 16px; opacity: 0.5;
+  }
+  
+  .media-summary {
+    grid-column: 1 / -1;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.8;
   }
 
   /* ── SPOKES GRID ── */
-  .spokes {
-    padding: 40px 8vw 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .spokes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-  }
-
-  /* ── SPOKE CARD ── */
-  .spoke {
-    display: block;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    padding: 32px 28px;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    color: var(--text-primary);
-  }
-
-  .spoke:hover {
-    background: var(--bg-card-hover);
-    border-color: var(--border-hover);
-    transform: translateY(-2px);
-    color: var(--text-primary);
-  }
-
-  .spoke::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.4s ease;
-  }
-
-  .spoke:hover::before {
-    transform: scaleX(1);
-  }
-
-  .spoke-icon {
-    font-size: 28px;
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .spoke-title {
-    font-family: var(--serif);
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    line-height: 1.2;
-  }
-
-  .spoke-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    margin-bottom: 16px;
-  }
-
-  .spoke-meta {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .spoke-arrow {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: var(--text-dim);
-    transition: all 0.3s ease;
-    margin-left: auto;
-  }
-
-  .spoke:hover .spoke-arrow {
-    color: var(--accent);
-    transform: translateX(4px);
-  }
-
-  /* ── FEATURED SPOKE (full-width) ── */
-  .spoke-featured {
-    grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    padding: 36px 32px;
-    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(200, 168, 124, 0.04) 100%);
-    border: 1px solid var(--border-hover);
-  }
-
-  .spoke-featured:hover {
-    background: linear-gradient(135deg, var(--bg-card-hover) 0%, rgba(200, 168, 124, 0.08) 100%);
-  }
-
-  .spoke-featured .spoke-icon {
-    font-size: 40px;
-    margin-bottom: 0;
-    flex-shrink: 0;
-  }
-
-  .spoke-featured .spoke-content {
-    flex: 1;
-  }
-
-  .spoke-featured .spoke-title {
-    font-size: 24px;
-    color: var(--accent);
-  }
-
-  .spoke-featured .spoke-desc {
-    max-width: 600px;
-  }
-
-  .spoke-featured .spoke-badge {
-    font-family: var(--mono);
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--accent-dim);
-    padding: 3px 10px;
-    display: inline-block;
-    margin-bottom: 10px;
-  }
-
-  /* ── SECTION DIVIDER ── */
   .section-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    padding: 40px 8vw 16px;
-    max-width: 1200px;
-    margin: 0 auto;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--text-dim);
+    padding: 40px 8vw 16px; max-width: 1200px; margin: 0 auto; text-align: center;
   }
+
+  .spokes { padding: 40px 8vw 80px; max-width: 1200px; margin: 0 auto; }
+  .spokes-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
+  }
+
+  .spoke {
+    background: var(--bg-card); border: 1px solid var(--border);
+    padding: 32px 28px; transition: all 0.4s ease;
+    display: block; text-decoration: none; position: relative; overflow: hidden;
+  }
+  .spoke:hover {
+    background: var(--bg-card-hover); border-color: var(--border-hover); transform: translateY(-2px);
+  }
+  .spoke::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+  }
+  .spoke:hover::before { transform: scaleX(1); }
+  .spoke-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+  .spoke-desc { font-size: 13px; color: var(--text-secondary); }
 
   /* ── FOOTER ── */
   footer {
-    padding: 60px 8vw 40px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    padding: 60px 8vw 40px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+    max-width: 1200px; margin: 0 auto;
   }
+  .footer-left { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .footer-mark { font-family: var(--mono); font-size: 16px; color: var(--accent); letter-spacing: 4px; }
 
-  .footer-left {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-dim);
-  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  .footer-gnu {
-    font-family: var(--mono);
-    font-size: 9px;
-    color: var(--text-dim);
-    letter-spacing: 1px;
-  }
-
-  .footer-mark {
-    font-family: var(--mono);
-    font-size: 16px;
-    color: var(--accent);
-    letter-spacing: 4px;
-  }
-
-  /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
-    .spokes { padding: 24px 6vw 60px; }
-    .spokes-grid { grid-template-columns: 1fr; }
-    .spoke-featured { flex-direction: column; align-items: flex-start; gap: 16px; }
-    .hero { min-height: 45vh; padding-top: 60px; }
-    footer { padding: 40px 6vw 30px; }
+    .media-layout { grid-template-columns: 1fr; }
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; /* Hide on mobile for minimalist look or add hamburger later */ }
   }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════ HERO ══════════════════ -->
+<nav>
+  <a href="index.html"><div class="nav-mark">><^</div></a>
+  <ul class="nav-links">
+    <li><a href="seesaw-theory.html">Seesaw Theory</a></li>
+    <li><a href="forensic-absolution.html">Forensic</a></li>
+    <li><a href="wonkys.html">Wonkys</a></li>
+    <li><a href="dodecagone-systems.html">Systems</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+
 <div class="hero">
   <div class="hero-mason">><^</div>
   <h1 class="hero-title">DodecaGone Systems</h1>
-  <p class="hero-sub">Jesse Haskin &mdash; Distributed AI Architecture &amp; Frameworks</p>
-  <p class="hero-tag">Kansas City, MO &middot; Est. 2026</p>
-  <div class="hero-line"></div>
+  <p class="hero-sub">Participating in Reality since 1987</p>
+  <p class="hero-tag">Kansas City, MO</p>
 </div>
 
-<!-- ══════════════════ FEATURED ══════════════════ -->
-<div class="section-label">Featured</div>
-<div class="spokes" style="padding-top: 0;">
-  <div class="spokes-grid">
-
-    <a href="downloads/YouAreHereV2.pdf" class="spoke spoke-featured">
-      <div class="spoke-icon">◈</div>
-      <div class="spoke-content">
-        <div class="spoke-badge">Free Download</div>
-        <div class="spoke-title">YOU ARE HERE: Keep Existing</div>
-        <p class="spoke-desc">
-          A framework for understanding what your brain is doing to you and what to do about it.
-          The Sanding Scale, personal crisis protocols, helper response guides, and blank templates
-          for building your own. Color-coded. Printable.
-        </p>
-        <div class="spoke-meta">
-          PDF &middot; Crisis Framework &middot; Freely Reproducible
-          <span class="spoke-arrow">→</span>
-        </div>
-      </div>
+<div class="downloads">
+  <a href="downloads/YouAreHereV2.pdf" class="dl-main">
+    <h2>YOU ARE HERE V2</h2>
+    <p>The definitive framework for understanding what your brain is doing to you and what to do about it.</p>
+    <div class="btn">Free Download (PDF)</div>
+  </a>
+  <div class="dl-secondary-row">
+    <a href="downloads/you_are_here.pdf" class="dl-sec">
+      <h3>You Are Here JR</h3>
+      <p>Simplified framework for immediate usage.</p>
+      <div class="btn-outline">Download JR</div>
     </a>
-
-    <!-- YOU ARE HERE resources row -->
-    <a href="downloads/you_are_here_simple.pdf" class="spoke">
-      <div class="spoke-icon">✎</div>
-      <div class="spoke-title">You Are Here: Essential</div>
-      <p class="spoke-desc">
-        Simplified, unified You Are Here framework.
-        Features the Sanding Scale and Super Simple Sanding Scale.
-      </p>
-      <div class="spoke-meta">
-        PDF &middot; Simplified &middot; Unified
-        <span class="spoke-arrow">→</span>
-      </div>
+    <a href="downloads/you_are_here_simple.pdf" class="dl-sec">
+      <h3>You Are Here Simple</h3>
+      <p>The bare essentials you need in a crisis.</p>
+      <div class="btn-outline">Download Simple</div>
     </a>
-
-    <a href="https://youtu.be/h2m1t3jw2vY" class="spoke" target="_blank">
-      <div class="spoke-icon">▶</div>
-      <div class="spoke-title">NotebookLM Breakdown</div>
-      <p class="spoke-desc">
-        AI host walks you through the YOU ARE HERE framework and discusses
-        what makes it different from standard crisis intervention tools.
-        Kawaii edition.
-      </p>
-      <div class="spoke-meta">
-        YouTube &middot; Video
-        <span class="spoke-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="downloads/THE%20YOU%20ARE%20HERE%20TOOLKIT_%20HOW%20TO%20USE%20THESE%20DOCUMENTS.pdf" class="spoke">
-      <div class="spoke-icon">☰</div>
-      <div class="spoke-title">Toolkit README</div>
-      <p class="spoke-desc">
-        How all three documents connect. What to upload, what to ask,
-        where to start. Quick reference for key concepts, licensing (CC BY-SA 4.0),
-        and recommended AI platforms for querying the material.
-      </p>
-      <div class="spoke-meta">
-        PDF &middot; Start Here
-        <span class="spoke-arrow">→</span>
-      </div>
-    </a>
-
   </div>
 </div>
 
-<!-- ══════════════════ ARCHITECTURE ══════════════════ -->
-<div class="section-label">Architecture</div>
-<div class="spokes" style="padding-top: 0;">
-  <div class="spokes-grid">
+<div class="media-layout">
+  <div class="media-placeholder">
+    <div class="icon">▶</div>
+    <div style="font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">[ YouTube Video Placeholder ]</div>
+  </div>
+  <div class="media-placeholder">
+    <div class="icon">◈</div>
+    <div style="font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">[ Image Placeholder ]</div>
+  </div>
+  <div class="media-summary">
+    Welcome to the Hub. This site contains frameworks, tools, and written architectures designed to help organize thought, handle cognitive load, and map the terrain of lived reality. Explore the spokes below to dive into the specific theories, systems, and artifacts built to date.
+  </div>
+</div>
 
-    <a href="downloads/FORENSIC_ABSOLUTION_v1_5.pdf" class="spoke">
-      <div class="spoke-icon">△</div>
+<div class="section-label">The Spokes</div>
+<div class="spokes">
+  <div class="spokes-grid">
+    <a href="seesaw-theory.html" class="spoke">
+      <div class="spoke-title">Seesaw Theory</div>
+      <div class="spoke-desc">Dynamic emotional and cognitive balancing.</div>
+    </a>
+    <a href="void-potential.html" class="spoke">
+      <div class="spoke-title">Void of Potential Layers</div>
+      <div class="spoke-desc">Exploring the architecture of what hasn't happened yet.</div>
+    </a>
+    <a href="forensic-absolution.html" class="spoke">
       <div class="spoke-title">Forensic Absolution</div>
-      <p class="spoke-desc">
-        A framework for eliminating recursive shame processing in cognitive systems.
-        Formal proof. PDF. The equation: &omega;_effective = &omega; - C_forensic - &sigma;.
-        Shame is computational overhead. Strip it out.
-      </p>
-      <div class="spoke-meta">
-        PDF &middot; v1.2 &middot; Free Download
-        <span class="spoke-arrow">→</span>
-      </div>
+      <div class="spoke-desc">A formal proof for eliminating recursive shame processing.</div>
     </a>
-
-    <a href="downloads/forge_math_completeCC.pdf" class="spoke">
-      <div class="spoke-icon">∑</div>
-      <div class="spoke-title">Forge Math</div>
-      <p class="spoke-desc">
-        100 sovereign equations across three compilation epochs.
-        The complete mathematical formalization of the Glitterbrain architecture,
-        from the Chiral Spiral to the Dodecagon Existence Proof.
-      </p>
-      <div class="spoke-meta">
-        PDF &middot; 100 Equations &middot; Free Download
-        <span class="spoke-arrow">→</span>
-      </div>
+    <a href="cr-imrad.html" class="spoke">
+      <div class="spoke-title">CR-IMRaD</div>
+      <div class="spoke-desc">Cognitive Reframing through scientific reporting structures.</div>
     </a>
-
-    <a href="downloads/forge_math_tier1_essential_eight.pdf" class="spoke">
-      <div class="spoke-icon">⊡</div>
-      <div class="spoke-title">Forge Math: Essential Eight</div>
-      <p class="spoke-desc">
-        The core 8 equations. Identity, architecture, and proof.
-        Start here if you want to understand the system in under 5 minutes.
-      </p>
-      <div class="spoke-meta">
-        PDF &middot; Quick Read
-        <span class="spoke-arrow">→</span>
-      </div>
+    <a href="wonkys.html" class="spoke">
+      <div class="spoke-title">Wonkys</div>
+      <div class="spoke-desc">Experimental software artifacts, esoteric programs, and chaotic scripts.</div>
     </a>
-
-    <a href="downloads/forge_math_tier2_professional_briefing.pdf" class="spoke">
-      <div class="spoke-icon">⊞</div>
-      <div class="spoke-title">Forge Math: Professional Briefing</div>
-      <p class="spoke-desc">
-        23 equations with EEG data, MMPI scores, and clinical measurements.
-        For therapists, researchers, recruiters, and anyone who wants the evidence.
-      </p>
-      <div class="spoke-meta">
-        PDF &middot; Clinical Data
-        <span class="spoke-arrow">→</span>
-      </div>
+    <a href="dodecagone-systems.html" class="spoke">
+      <div class="spoke-title">DodecaGone Systems</div>
+      <div class="spoke-desc">The core distributed AI architecture, published frameworks, and tools.</div>
     </a>
-
-  </div>
-</div>
-
-<!-- ══════════════════ BUILT THINGS ══════════════════ -->
-<div class="section-label">Built Things</div>
-<div class="spokes" style="padding-top: 0;">
-  <div class="spokes-grid">
-
-    <a href="dodecagone.html" class="spoke">
-      <div class="spoke-icon">⬡</div>
-      <div class="spoke-title">The Dodecagon</div>
-      <p class="spoke-desc">
-        13-node distributed AI system across Claude, Gemini, and DeepSeek.
-        Core frameworks, governance methods, and architecture documentation.
-        14,000+ interaction turns. 45M+ characters documented.
-      </p>
-      <div class="spoke-meta">
-        Frameworks &middot; Methods &middot; Archive
-        <span class="spoke-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="projects.html" class="spoke">
-      <div class="spoke-icon">◇</div>
-      <div class="spoke-title">Projects &amp; Tools</div>
-      <p class="spoke-desc">
-        20+ applications, experimental languages, and wonkys.
-        GardenDeck, WonkyPad, FrogPond, PleaseScript, NeuroSync,
-        the Win95 series, RaveSafe.cob, and more. All with source.
-      </p>
-      <div class="spoke-meta">
-        20+ Projects &middot; Full Catalog
-        <span class="spoke-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="garden/" class="spoke">
-      <div class="spoke-icon">&#127793;</div>
-      <div class="spoke-title">GardenDeck</div>
-      <p class="spoke-desc">
-        Garden tracker that presents your plants as Magic: The Gathering cards.
-        Auto-populates via Perenual API. PWA-ready. Card flip reveals
-        maintenance logs. The flagship app.
-      </p>
-      <div class="spoke-meta">
-        Live App &middot; PWA
-        <span class="spoke-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="https://github.com/haskinj" class="spoke" target="_blank">
-      <div class="spoke-icon">&#9000;</div>
-      <div class="spoke-title">GitHub</div>
-      <p class="spoke-desc">
-        4 public repositories: Python projects, Wonkys, DodecaGone Systems
-        architecture docs, and Gemini node configurations. All source code.
-        All open.
-      </p>
-      <div class="spoke-meta">
-        github.com/haskinj
-        <span class="spoke-arrow">→</span>
-      </div>
-    </a>
-
-  </div>
-</div>
-
-<!-- ══════════════════ CONNECT ══════════════════ -->
-<div class="section-label">Connect</div>
-<div class="spokes" style="padding-top: 0;">
-  <div class="spokes-grid">
-
     <a href="contact.html" class="spoke">
-      <div class="spoke-icon">&#9993;</div>
-      <div class="spoke-title">Contact</div>
-      <p class="spoke-desc">
-        Email, LinkedIn, and other ways to reach Jesse.
-      </p>
-      <div class="spoke-meta">
-        Email &middot; LinkedIn &middot; Gumroad
-        <span class="spoke-arrow">→</span>
-      </div>
+      <div class="spoke-title">About / Contact</div>
+      <div class="spoke-desc">Reach out, or explore the archive.</div>
     </a>
-
-    <a href="https://okayestperson.neocities.org" class="spoke" target="_blank">
-      <div class="spoke-icon">&#128190;</div>
-      <div class="spoke-title">NeoCities Archive</div>
-      <p class="spoke-desc">
-        The historical archive. Brain scans, early wonkys, raw documentation
-        from the first weeks of the build. The archaeological record.
-      </p>
-      <div class="spoke-meta">
-        okayestperson.neocities.org
-        <span class="spoke-arrow">→</span>
-      </div>
-    </a>
-
-    <a href="https://haskin7.gumroad.com" class="spoke" target="_blank">
-      <div class="spoke-icon">&#9878;</div>
-      <div class="spoke-title">Gumroad</div>
-      <p class="spoke-desc">
-        Downloadable frameworks and templates. Everything is free or
-        pay-what-you-want. Take what helps.
-      </p>
-      <div class="spoke-meta">
-        haskin7.gumroad.com
-        <span class="spoke-arrow">→</span>
-      </div>
-    </a>
-
   </div>
 </div>
 
-<!-- ══════════════════ FOOTER ══════════════════ -->
 <footer>
   <div class="footer-left">
     &copy; 2026 Jesse Haskin / DodecaGone Systems
