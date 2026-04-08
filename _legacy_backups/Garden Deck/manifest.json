@@ -1,0 +1,22 @@
+{
+  "name": "GardenDeck",
+  "short_name": "GardenDeck",
+  "description": "Garden tracker — your plants as Magic cards",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1a1a18",
+  "theme_color": "#1a1a18",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
