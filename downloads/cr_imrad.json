@@ -1,0 +1,479 @@
+{
+  "spec_name": "CR-IMRaD",
+  "version": "3.1.1",
+  "version_date": "2026-04-04",
+  "description": "Cognitive-Resonant IMRaD: A Unified Standard for High-Fidelity Knowledge Distillation",
+  "license": "CC BY-SA 4.0",
+  "author": "Jesse Haskin / DodecaGone Systems",
+  "url": "dodecagone.net",
+  "changelog": [
+    "3.1.1: Separated Page Reference Block (citations) from Footer (boilerplate). Citations now live in a horizontal-rule-delimited zone at bottom of content area, NOT in the document footer. Footer is static boilerplate only.",
+    "3.1.1: Header alignment corrected to right-aligned with pipe-delimited authors and page number.",
+    "3.1.1: Renamed Simple Summary to Simplest Summary throughout for consistency with master doc.",
+    "3.1.1: Format constraint tightened to paragraph only (no bullets in Simplest Summary).",
+    "3.1.1: Weasel word flagging moved from AMBER to GREEN (deterministic detection).",
+    "3.1.1: Added V28-V30 validators for Page Reference Block, footer boilerplate, and horizontal rule presence.",
+    "3.1.1: Added relational concept rule to pagination (Section 8.0 of master doc)."
+  ],
+  "scope": {
+    "authorized_domains": [
+      "explanatory documents",
+      "instructional guides",
+      "troubleshooting manuals",
+      "technical primers",
+      "articles of understanding"
+    ],
+    "excluded_domains": [
+      {
+        "type": "crisis_protocols",
+        "example": "YOU ARE HERE",
+        "reason": "Emergency text requires somatic ultra-brief directives. Hourglass narrative introduces unacceptable cognitive load during amygdala hijack."
+      },
+      {
+        "type": "raw_mathematical_notation",
+        "example": "Forge Math",
+        "reason": "Mathematical structures rely on compressed topological notation. Plain-language constraints degrade structural integrity."
+      },
+      {
+        "type": "creative_narrative_fiction",
+        "reason": "Brevity, objectivity, and anti-passive-voice rules conflict with aesthetic and emotional goals of literature."
+      }
+    ]
+  },
+  "page_geometry": {
+    "page_size": "US_letter",
+    "width_inches": 8.5,
+    "height_inches": 11,
+    "margins": {
+      "top_inches": 1.0,
+      "bottom_inches": 1.0,
+      "left_inches": 1.0,
+      "right_inches": 1.0
+    },
+    "content_width_inches": 6.5,
+    "content_height_inches": 9.0
+  },
+  "pagination": {
+    "title_page_number": 0,
+    "numbering_starts_at": 1,
+    "position": "upper_right",
+    "font_size_pt": [8, 10],
+    "rules": [
+      "Each page must function as a verifiable robust link in a conceptual chain contributing a single discrete unit of knowledge",
+      "Complex arguments may span multiple pages but must maintain clear conceptual continuity",
+      "No widowed headings",
+      "No orphan sentences",
+      "If a concept is relational define it by its connections not by being a box itself"
+    ]
+  },
+  "header": {
+    "font_size_pt_range": [8, 10],
+    "font_family": "any_legible",
+    "alignment": "right",
+    "content": "author_names_pipe_delimited_then_page_number",
+    "delimiter": " | ",
+    "example": "Author A | Author B | Author C",
+    "starts_after": "title_page"
+  },
+  "page_reference_block": {
+    "_description": "The Zero-Flipping Zone. This is NOT the document footer. It is a distinct unpaginated section at the bottom of the main content area, separated from body text by a thin horizontal rule.",
+    "location": "bottom_of_content_area",
+    "separator": "thin_horizontal_rule",
+    "font_size_pt_range": [8, 10],
+    "alignment": "left",
+    "format": "single_column",
+    "content": "full_citations_for_this_page_only",
+    "citation_separator": "line_break",
+    "example": "1 Sweller, J. (2024). Cognitive Load Theory. This study establishes the intrinsic load limit for technical instruction.\n2 Redish, J. (2023). Letting go of the perfect: Writing for comprehension.",
+    "rule": "Citations must exist on the same page as their reference. Zero page-flipping. Each citation on its own line, NOT pipe-delimited."
+  },
+  "footer": {
+    "_description": "Static boilerplate only. Citations have moved to the Page Reference Block above.",
+    "font_size_pt_range": [8, 10],
+    "alignment": "left_or_centered",
+    "content": "static_boilerplate",
+    "allowed_content": [
+      "copyright_notice",
+      "license",
+      "document_version",
+      "date",
+      "organization_url"
+    ],
+    "example": "DodecaGone Systems | dodecagone.net | CC BY-SA 4.0 | 2026-04-04",
+    "starts_after": "title_page",
+    "rule": "Footer content is identical on every page. No per-page variation. No citations."
+  },
+  "macro_architecture": {
+    "structure": "metaphoric_hourglass",
+    "sections": [
+      {
+        "name": "title_page",
+        "position": "page_0",
+        "required_elements": [
+          "title_large_bold_centered",
+          "subtitle_plus_date",
+          "author_names",
+          "visual_aid_centered_if_able_with_caption",
+          "simplest_summary_bottom_third"
+        ]
+      },
+      {
+        "name": "introduction",
+        "alias": "the_universal_metaphor",
+        "rules": [
+          "You may NOT introduce a technical concept using technical terms",
+          "You MUST begin with an accessible universally understood physical metaphor",
+          "Leverages elaborative rehearsal: connecting new information to familiar experiences"
+        ]
+      },
+      {
+        "name": "methods",
+        "alias": "the_technical_mechanism",
+        "rules": [
+          "The narrow neck of the hourglass",
+          "Map the metaphor to scientific reality with explicit mathematically defensible correspondences"
+        ]
+      },
+      {
+        "name": "results_and_discussion",
+        "alias": "the_resolution",
+        "rules": [
+          "Resolve the metaphor problem using the technical truth",
+          "Reader should finish feeling satiated by data density or questions posed"
+        ]
+      },
+      {
+        "name": "resources",
+        "position": "end",
+        "required_subsections": [
+          "bibliography",
+          "knowledge_aids_index",
+          "acknowledgements",
+          "funding_disclosures",
+          "affiliations"
+        ]
+      }
+    ]
+  },
+  "simplest_summary": {
+    "position": "bottom_third_of_page_0",
+    "placement": "under_title_subtitle_and_visual",
+    "requirements": [
+      "Most accessible section of entire document",
+      "Non-technical yet rigorous",
+      "Plain-language summary of entire document",
+      "Accompanied by a summarizing visual aid centered on page 0 if able with descriptive text immediately below"
+    ],
+    "constraints": {
+      "min_sentences": 3,
+      "max_words": 200,
+      "format": "paragraph",
+      "bolding": "encouraged_where_useful"
+    },
+    "automation_level": "AMBER",
+    "automation_note": "LLM can draft. Author MUST review and confirm."
+  },
+  "micro_architecture": {
+    "sentence_constraints": {
+      "instructional_max_words": 20,
+      "descriptive_max_words": 25
+    },
+    "paragraph_constraints": {
+      "max_lines": 8,
+      "topics_per_paragraph": 1
+    },
+    "voice": {
+      "mandate": "active_voice_exclusively",
+      "rules": [
+        "Replace 'to be' verbs with strong action verbs",
+        "Remove weasel words: slightly, mostly, seems, somewhat, arguably",
+        "Be extremely clear and concise"
+      ]
+    },
+    "simple_concept_test": {
+      "a_or_an_test": "Every defined concept must be expressible as 'a [noun]' or 'an [noun]'",
+      "relationship_test": "Relationships between concepts must form valid readable English sentences",
+      "action_mandate": "If a concept cannot pass these tests it must be rewritten"
+    }
+  },
+  "skimmable_path": {
+    "method": "selective_bolding",
+    "rules": [
+      "Bold 1-3 critical concepts or keywords per paragraph",
+      "Bolded words must form a grammatically sensible summary when read in sequence",
+      "Do NOT bold non-essential words",
+      "The skimmable path IS the author's thesis compressed into visual scaffold"
+    ],
+    "automation_level": "AMBER",
+    "automation_note": "Machine can suggest speculative bolding based on term frequency and position. Author MUST confirm. Final bold = act of authorial intent."
+  },
+  "citations": {
+    "in_text": {
+      "format": "superscript_numeric_glyph",
+      "placement": "after_terminal_punctuation",
+      "rule": "Keep skimmable path free of citation clutter"
+    },
+    "citation_mode": {
+      "description": "Two modes available. Author selects based on document type.",
+      "explanatory": {
+        "alias": "Mode A",
+        "use_case": "Primers, manuals, CR-IMRaD conversions of external research",
+        "reference_block_format": "Author Name (Year). Title of Work. (One-sentence plain-language takeaway).",
+        "example": "1 Sweller, J. (2024). Cognitive Load Theory. This study establishes the intrinsic load limit for technical instruction.",
+        "summary_required": true
+      },
+      "compact": {
+        "alias": "Mode B",
+        "use_case": "Formal frameworks, theorems, technical specifications, self-citing documents",
+        "reference_block_format": "Page/Section ranges, Author Name, Title (Year). [persistent link]",
+        "example": "1  1-26, 63, 99-100, Haskin J., YOU ARE HERE: Keep Existing (2026). dodecagone.net",
+        "summary_required": false,
+        "persistent_link_required": true
+      }
+    },
+    "placement": "page_reference_block_same_page",
+    "zero_page_flipping": true,
+    "visual_integration": {
+      "rule": "If a source supports a diagram citation must be integrated into the descriptive caption not relegated to a separate list"
+    },
+    "simple_concept_test": "Every citation must be identifiable as 'a specific study' or 'an expert voice'"
+  },
+  "knowledge_aids": {
+    "definition": "Any non-prose visual element intended to accelerate comprehension. Includes diagrams, flowcharts, cartoons, infographics, tables, glyphs, annotated photographs, spatial metaphor maps. Excludes decorative images, stock photography, elements with no informational load.",
+    "removal_test": "If removing the visual would not reduce the reader's comprehension it does not belong in the document.",
+    "mandatory_elements": {
+      "figure_number": {
+        "format": "Fig X.Y",
+        "rule": "X = section number, Y = sequence within section"
+      },
+      "descriptive_caption": {
+        "placement": "directly_adjacent",
+        "horizontal_figures": "below",
+        "vertical_figures": "beside",
+        "content": "Must describe what reader is seeing AND what conclusion to draw"
+      },
+      "source_attribution": {
+        "rule": "Integrated into caption per Citation Standard. If original state: 'Original.'"
+      },
+      "alt_text": {
+        "rule": "For digital output every visual must include screen-reader-accessible alt text conveying equivalent informational content",
+        "principle": "A blind reader must receive equivalent comprehension"
+      }
+    },
+    "quality_gates": {
+      "replacement_test": "Could this visual be replaced by a single sentence without loss of comprehension? If yes use the sentence.",
+      "standalone_test": "Can a reader understand the visual core message from figure caption and labels alone without reading surrounding body text? If no the visual is incomplete."
+    },
+    "spatial_integration": {
+      "proximity": "Visual must appear within one page of first textual reference",
+      "orientation_matching": {
+        "vertical_diagram": "Two-column layout or vertical text block adjacent. Prevents long eye-travel distances.",
+        "horizontal_diagram": "Full-width blocks above and below. Maintains natural downward reading flow.",
+        "complex_circular": "Callout lines from text to image parts. Eliminates need for separate legend."
+      },
+      "no_orphaned_figures": "A knowledge aid must never appear on a page by itself with no accompanying text",
+      "flow_preservation": "Reader eye should never jump backward or laterally more than one column width to resume reading"
+    },
+    "cartoons": {
+      "narrative_function": "Must map directly to a technical concept. Visual form of the Universal Metaphor not decoration.",
+      "max_concepts_per_panel": 3,
+      "humor": "Permitted and encouraged when it serves comprehension. The joke serves the truth; the truth does not serve the joke.",
+      "recurring_visual_language": "Establish consistent visual vocabulary and maintain throughout. Do not introduce new visual language on every page."
+    },
+    "tables": {
+      "max_columns": 6,
+      "beyond_six": "Split or restructure as diagram",
+      "row_headers": "Clearly distinguished using weight or shading contrast",
+      "no_empty_cells": "Use 'N/A' or 'Not measured'",
+      "reading_direction": "Left-to-right top-to-bottom only"
+    }
+  },
+  "resources_section": {
+    "acknowledgements": {
+      "definition": "Recognizes entities that contributed but do not meet authorship threshold",
+      "authorship_threshold": "Substantive intellectual contributions to content structure or conclusions",
+      "categories": [
+        {
+          "type": "intellectual_contributors",
+          "format": "Name (Affiliation) provided [specific contribution]"
+        },
+        {
+          "type": "technical_contributors",
+          "format": "System (Platform) performed [specific function]"
+        },
+        {
+          "type": "somatic_contributors",
+          "format": "Name provided [specific environmental or support function]"
+        }
+      ],
+      "constraints": [
+        "No marketing language",
+        "No superlatives",
+        "No unverifiable claims",
+        "Every acknowledgement must pass Simple Concept Test"
+      ]
+    },
+    "funding_disclosures": {
+      "mandate": "exhaustive_disclosure",
+      "categories": [
+        {
+          "type": "direct_funding",
+          "if_none": "This work received no direct funding."
+        },
+        {
+          "type": "in_kind_support",
+          "examples": "Platform subscriptions, hardware access, API credits, donated services"
+        },
+        {
+          "type": "potential_conflicts",
+          "if_none": "The authors declare no conflicts of interest."
+        }
+      ],
+      "fidelity_rule": "Omission of a material funding source constitutes a fidelity violation"
+    },
+    "affiliations": {
+      "required_fields": [
+        "primary_affiliation",
+        "role",
+        "location_city_country",
+        "public_contact_method"
+      ],
+      "independent_researcher": "State explicitly: 'Independent researcher, unaffiliated.'",
+      "anti_inflation": "Affiliation must accurately reflect context of production not aspirational context",
+      "ai_contributors": "Listed in Acknowledgements not Affiliations unless authorship framework explicitly defines AI as co-author. If co-author: platform and version as affiliation."
+    }
+  },
+  "procedural_syntax": {
+    "rules": [
+      "One action per sentence",
+      "Use vertical lists for multi-step procedures",
+      "Begin safety instructions with a command or condition"
+    ]
+  },
+  "modularity": {
+    "method": "transclusion",
+    "rules": [
+      "Each prerequisite procedure exists as single standalone module in CMS or DITA/XML",
+      "Writers insert programmatic callout",
+      "Publishing platform renders prerequisite steps in place",
+      "Users never navigate away",
+      "Writers maintain only one master version"
+    ]
+  },
+  "typography": {
+    "font_selection": "Based on legibility for output medium not family. Both serif and sans-serif acceptable. Accessibility and comfort of reading are paramount.",
+    "crap_principles": ["contrast", "repetition", "alignment", "proximity"],
+    "contrast_requirements": {
+      "headings": "bold 16-18pt",
+      "body": "10-12pt",
+      "rule": "Size and weight contrast to distinguish headings from body"
+    },
+    "negative_space": "Generous white space reduces intimidation and improves readability"
+  },
+  "visual_pov": {
+    "physical_tasks": "first_person_pov_images",
+    "zoom_rule": "Zoom for detail but never so far that context is lost"
+  },
+  "audience_calibration": {
+    "method": "hallway_test",
+    "rules": [
+      "Reading level equals writing level",
+      "Hand draft to a novice",
+      "Every 'I don't know what this means' requires revision or consideration",
+      "Spell out acronyms on first use",
+      "Provide inline definitions or glossary for unavoidable technical terms",
+      "Embed feedback mechanisms in digital modules"
+    ]
+  },
+  "multimedia": {
+    "descriptive_captions": "Every visual element must include descriptive caption placed directly adjacent",
+    "audio_narration": "Audio buttons leverage modality effect: simultaneous auditory + visual channels reduce cognitive load",
+    "gifs_short_video": {
+      "max_duration_seconds": 30,
+      "rule": "Targeted clips to demonstrate motion or change"
+    },
+    "animation_controls": {
+      "required": ["play", "pause", "rewind", "fast_forward", "speed_control"],
+      "rule": "Interactive control dramatically improves comprehension"
+    }
+  },
+  "automation_levels": {
+    "GREEN": {
+      "description": "Fully automatable. Machine applies with confidence. No author review needed.",
+      "examples": [
+        "Page geometry and margins",
+        "Font sizing",
+        "Header architecture",
+        "Footer boilerplate placement",
+        "Page Reference Block horizontal rule and formatting",
+        "Citation superscript numbering",
+        "Citation placement in Page Reference Block",
+        "Figure numbering",
+        "Pagination",
+        "Sentence length validation",
+        "Paragraph length validation",
+        "Empty cell detection in tables",
+        "Column count validation in tables",
+        "Orphan/widow detection",
+        "Weasel word flagging",
+        "Acronym expansion checking"
+      ]
+    },
+    "AMBER": {
+      "description": "Machine suggests. Author must review and confirm.",
+      "examples": [
+        "Speculative bolding (skimmable path)",
+        "Suggested opening metaphor",
+        "Suggested Simplest Summary draft",
+        "Citation one-sentence summaries",
+        "Alt text generation",
+        "Descriptive caption drafts",
+        "Active voice conversion suggestions"
+      ]
+    },
+    "RED": {
+      "description": "Cannot automate. Author must write or decide.",
+      "examples": [
+        "Final bolding confirmation (skimmable path)",
+        "Opening metaphor selection",
+        "Simplest Summary final approval",
+        "Humor judgment in cartoons (whether joke serves truth)",
+        "Authorship threshold determination",
+        "Conflict of interest assessment",
+        "Affiliation accuracy verification"
+      ]
+    }
+  },
+  "validator_checks": [
+    {"id": "V01", "rule": "Instructional sentence exceeds 20 words", "severity": "error", "automation": "GREEN"},
+    {"id": "V02", "rule": "Descriptive sentence exceeds 25 words", "severity": "error", "automation": "GREEN"},
+    {"id": "V03", "rule": "Paragraph exceeds 8 lines", "severity": "error", "automation": "GREEN"},
+    {"id": "V04", "rule": "Paragraph contains more than one topic", "severity": "warning", "automation": "AMBER"},
+    {"id": "V05", "rule": "Passive voice detected", "severity": "warning", "automation": "AMBER"},
+    {"id": "V06", "rule": "Weasel word detected", "severity": "warning", "automation": "GREEN"},
+    {"id": "V07", "rule": "Citation not on same page as reference", "severity": "error", "automation": "GREEN"},
+    {"id": "V08", "rule": "Citation missing summary (Mode A) or persistent link (Mode B)", "severity": "error", "automation": "GREEN", "note": "Validation depends on citation_mode setting"},
+    {"id": "V09", "rule": "Figure missing descriptive caption", "severity": "error", "automation": "GREEN"},
+    {"id": "V10", "rule": "Figure missing alt text", "severity": "error", "automation": "GREEN"},
+    {"id": "V11", "rule": "Figure missing source attribution", "severity": "warning", "automation": "GREEN"},
+    {"id": "V12", "rule": "Figure appears more than one page from first textual reference", "severity": "error", "automation": "GREEN"},
+    {"id": "V13", "rule": "Orphaned figure on page with no accompanying text", "severity": "error", "automation": "GREEN"},
+    {"id": "V14", "rule": "Table exceeds 6 columns", "severity": "error", "automation": "GREEN"},
+    {"id": "V15", "rule": "Table contains empty cells", "severity": "warning", "automation": "GREEN"},
+    {"id": "V16", "rule": "No bolding detected in paragraph (missing skimmable path)", "severity": "warning", "automation": "GREEN"},
+    {"id": "V17", "rule": "More than 3 bold segments in single paragraph", "severity": "warning", "automation": "GREEN"},
+    {"id": "V18", "rule": "Simplest Summary missing from page 0", "severity": "error", "automation": "GREEN"},
+    {"id": "V19", "rule": "Simplest Summary exceeds 200 words", "severity": "error", "automation": "GREEN"},
+    {"id": "V20", "rule": "Simplest Summary has fewer than 3 sentences", "severity": "error", "automation": "GREEN"},
+    {"id": "V21", "rule": "Introduction opens with technical terms before metaphor", "severity": "warning", "automation": "AMBER"},
+    {"id": "V22", "rule": "Widowed heading at bottom of page", "severity": "error", "automation": "GREEN"},
+    {"id": "V23", "rule": "Acknowledgements section missing", "severity": "warning", "automation": "GREEN"},
+    {"id": "V24", "rule": "Funding disclosure missing", "severity": "error", "automation": "GREEN"},
+    {"id": "V25", "rule": "Affiliation section missing", "severity": "error", "automation": "GREEN"},
+    {"id": "V26", "rule": "Cartoon panel contains more than 3 concepts", "severity": "warning", "automation": "AMBER"},
+    {"id": "V27", "rule": "Acronym used without first-use expansion", "severity": "error", "automation": "GREEN"},
+    {"id": "V28", "rule": "Page contains citations but no Page Reference Block with horizontal rule separator", "severity": "error", "automation": "GREEN"},
+    {"id": "V29", "rule": "Footer contains per-page variable content (should be static boilerplate only)", "severity": "error", "automation": "GREEN"},
+    {"id": "V30", "rule": "Page Reference Block uses pipe delimiters instead of line breaks between citations", "severity": "warning", "automation": "GREEN"}
+  ]
+}

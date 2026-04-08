@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CR-IMRaD — DodecaGone Systems</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700&family=Playfair+Display:wght@400;500;700;900&family=IBM+Plex+Mono:wght@300;400;500&display=swap');
+
+  :root {
+    --bg-primary: #0c0c0e;
+    --bg-secondary: #111114;
+    --bg-card: #16161a;
+    --bg-card-hover: #1c1c22;
+    --text-primary: #e8e4de;
+    --text-secondary: #8a8680;
+    --text-dim: #4a4744;
+    --accent: #88b4e7; /* CR-IMRaD Blue */
+    --accent-dim: rgba(200, 168, 124, 0.12);
+    --accent-glow: rgba(200, 168, 124, 0.06);
+    --border: rgba(255, 255, 255, 0.06);
+    --border-hover: rgba(200, 168, 124, 0.2);
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', -apple-system, sans-serif;
+    --mono: 'IBM Plex Mono', 'Menlo', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  a { color: var(--accent); text-decoration: none; transition: all 0.3s ease; }
+  a:hover { color: var(--text-primary); }
+
+  /* ── NAVIGATION ── */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(12, 12, 14, 0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-mark {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--accent);
+    letter-spacing: 3px;
+    font-weight: 500;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--text-primary); }
+
+  /* ── HERO ── */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 140px 8vw 60px;
+    text-align: center;
+    position: relative;
+  }
+
+  .hero-mason {
+    font-family: var(--mono);
+    font-size: 18px;
+    color: var(--accent);
+    letter-spacing: 6px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: var(--serif);
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.4s forwards;
+  }
+
+  .hero-sub {
+    font-family: var(--sans);
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.6s forwards;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 0.8s forwards;
+  }
+
+  /* ── DOWNLOADS SECTION ── */
+  .downloads {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto 60px;
+    padding: 0 8vw;
+    animation: fadeIn 0.8s ease 1s forwards;
+    opacity: 0;
+  }
+
+  .dl-main {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(200, 168, 124, 0.08) 100%);
+    border: 1px solid var(--accent);
+    padding: 40px;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+  }
+  .dl-main:hover {
+    background: linear-gradient(135deg, var(--bg-card-hover) 0%, rgba(200, 168, 124, 0.12) 100%);
+    transform: translateY(-2px);
+  }
+  .dl-main h2 { font-family: var(--serif); font-size: 36px; margin-bottom: 10px; color: var(--accent); }
+  .dl-main p { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; }
+  .btn {
+    display: inline-block;
+    font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
+    padding: 16px 32px; background: var(--accent); color: #000; font-weight: 700;
+  }
+  .btn:hover { background: #fff; color: #000; }
+
+  .dl-secondary-row {
+    display: flex; gap: 20px; width: 100%; justify-content: center;
+    flex-wrap: wrap;
+  }
+  .dl-sec {
+    flex: 1; min-width: 280px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    padding: 24px; text-align: center;
+  }
+  .dl-sec:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+  .dl-sec h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 10px; }
+  .dl-sec a.btn-outline {
+    display: inline-block; margin-top: 10px;
+    font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
+    padding: 10px 20px; border: 1px solid var(--accent); color: var(--accent);
+  }
+  .dl-sec a.btn-outline:hover { background: var(--accent-dim); }
+
+  /* ── MEDIA SECTION ── */
+  .media-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 0 8vw;
+  }
+  
+  .media-placeholder {
+    background: var(--bg-secondary);
+    border: 1px dashed var(--border-hover);
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: var(--text-dim);
+  }
+  
+  .media-placeholder .icon {
+    font-size: 32px; margin-bottom: 16px; opacity: 0.5;
+  }
+  
+  .media-summary {
+    grid-column: 1 / -1;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  /* ── SPOKES GRID ── */
+  .section-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--text-dim);
+    padding: 40px 8vw 16px; max-width: 1200px; margin: 0 auto; text-align: center;
+  }
+
+  .spokes { padding: 40px 8vw 80px; max-width: 1200px; margin: 0 auto; }
+  .spokes-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;
+  }
+
+  .spoke {
+    background: var(--bg-card); border: 1px solid var(--border);
+    padding: 32px 28px; transition: all 0.4s ease;
+    display: block; text-decoration: none; position: relative; overflow: hidden;
+  }
+  .spoke:hover {
+    background: var(--bg-card-hover); border-color: var(--border-hover); transform: translateY(-2px);
+  }
+  .spoke::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+  }
+  .spoke:hover::before { transform: scaleX(1); }
+  .spoke-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+  .spoke-desc { font-size: 13px; color: var(--text-secondary); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 60px 8vw 40px; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .footer-left { font-family: var(--mono); font-size: 11px; color: var(--text-dim); }
+  .footer-mark { font-family: var(--mono); font-size: 16px; color: var(--accent); letter-spacing: 4px; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 768px) {
+    .media-layout { grid-template-columns: 1fr; }
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; /* Hide on mobile for minimalist look or add hamburger later */ }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html"><div class="nav-mark">><^</div></a>
+  <ul class="nav-links">
+    <li><a href="seesaw-theory.html">Seesaw Theory</a></li>
+    <li><a href="forensic-absolution.html">Forensic</a></li>
+    <li><a href="wonkys.html">Wonkys</a></li>
+    <li><a href="dodecagone-systems.html">Systems</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
+<div class="page-header" style="padding: 140px 8vw 60px;">
+  <div class="page-tag" style="font-family: var(--mono); font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--accent); margin-bottom: 16px;">Framework</div>
+  <h1 class="page-title" style="font-family: var(--serif); font-size: clamp(32px, 5vw, 56px); font-weight: 900; line-height: 1.1; margin-bottom: 16px;">CR-IMRaD</h1>
+  <p class="page-description" style="max-width: 560px; font-size: 15px; color: var(--text-secondary); line-height: 1.8;">
+    Cognitive Reframing through scientific reporting structures.
+  </p>
+</div>
+
+<div class="downloads" style="display: flex; flex-direction: column; align-items: center; max-width: 1000px; margin: 0 auto 60px; padding: 0 8vw;">
+  <a href="downloads/cr_imrad.pdf" class="dl-main" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(136, 180, 231, 0.08) 100%); border: 1px solid var(--accent); padding: 40px; text-align: center; width: 100%; transition: all 0.3s ease; text-decoration: none;">
+    <h2 style="font-family: var(--serif); font-size: 36px; margin-bottom: 10px; color: var(--accent);">THE CR-IMRaD SPECIFICATION</h2>
+    <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px;">The definitive standard for clinical and operational technical writing (v3.1.1).</p>
+    <div class="btn" style="display: inline-block; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; padding: 16px 32px; background: var(--accent); color: #000; font-weight: 700;">Download / View PDF</div>
+  </a>
+  <div class="dl-secondary-row" style="margin-top: 10px;">
+    <div class="dl-sec" style="background: var(--bg-card); border: 1px solid var(--border); padding: 24px; text-align: center;">
+      <h3 style="font-family: var(--serif); font-size: 20px; margin-bottom: 10px;">JSON Configurations</h3>
+      <p style="font-size: 12px; color: var(--text-secondary);">Direct JSON spec for parsing CR-IMRaD inputs.</p>
+      <a href="downloads/cr_imrad.json" class="btn-outline" style="display: inline-block; margin-top: 10px; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; padding: 10px 20px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none;">Download .JSON</a>
+    </div>
+  </div>
+</div>
+
+<div class="category" style="padding: 0 8vw 60px; max-width: 1000px; margin: 0 auto; color: var(--text-secondary); line-height: 1.8; font-size: 16px; text-align: center;">
+    CR-IMRaD acts as the architectural constraint for framing cognitive anomalies. By utilizing Introduction, Methods, Results, and Data models, the user operationalizes recursive loops into objective states.
+</div>
+
+<div class="media-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1000px; margin: 0 auto 80px; padding: 0 8vw;">
+  <div class="media-placeholder" style="background: var(--bg-secondary); border: 1px dashed var(--border-hover); height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--text-dim);">
+    <div class="icon" style="font-size: 32px; margin-bottom: 16px; opacity: 0.5;">▶</div>
+    <div style="font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">[ Video Attachment ]</div>
+  </div>
+  <div class="media-placeholder" style="background: var(--bg-secondary); border: 1px dashed var(--border-hover); height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--text-dim);">
+    <div class="icon" style="font-size: 32px; margin-bottom: 16px; opacity: 0.5;">◈</div>
+    <div style="font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">[ Framework Diagram ]</div>
+  </div>
+</div>
+<footer>
+  <div class="footer-left">
+    &copy; 2026 Jesse Haskin / DodecaGone Systems
+    <br>
+    <span class="footer-gnu">GNU TERRY PRATCHETT</span>
+  </div>
+  <div class="footer-mark">><^</div>
+</footer>
+</body></html>
