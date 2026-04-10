@@ -1,36 +1,42 @@
-# DodecaGone Systems
-**Participating in Reality since 1987**
+<div align="center">
+  <img src="repo_banner.png" width="100%" alt="DodecaGone Systems Banner" />
+  
+  <h1>DODECA GONE SYSTEMS</h1>
+  <p><b>A Unified Hub for Cognitive Orchestration</b></p>
 
-![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)
-![Status: Framework Active](https://img.shields.io/badge/Status-Active-brightgreen.svg)
-
-DodecaGone Systems is a multi-disciplinary research and development framework for **Cognitive Orchestration**, **Systems Biology**, and **High-Fidelity Knowledge Synthesis**. 
-
-We treat the human body and mind as integrated hardware. Our tools are designed to reduce cognitive friction, stabilize systems in crisis, and mathematically model lived experience using thermodynamics and category theory.
-
----
-
-## 🏛️ The Toolkit Ecosystem
-The DodecaGone framework is divided into four specialized open-source toolkits. Each repository contains specific documentation, protocols, and master PDFs.
-
-| Toolkit | Description |
-| :--- | :--- |
-| 🛡️ **[You Are Here](https://github.com/haskinj/you-are-here)** | Crisis navigation and stabilization. Start here if you are overwhelmed. |
-| 🧰 **[I Need Maintenance](https://github.com/haskinj/i-need-maintenance)** | A diagnostic and repair manual for daily human systems maintenance. |
-| 📐 **[Forge Math](https://github.com/haskinj/forge-math)** | A mathematical framework mapping lived experience to physics and category theory. |
-| 📄 **[CR-IMRaD](https://github.com/haskinj/cr-imrad)** | A unified writing standard for converting technical research into high-fidelity, readable docs. |
+  <p>
+    <a href="https://dodecagone.net"><img src="https://img.shields.io/badge/Official-Website-c8a87c?style=for-the-badge" /></a>
+    <a href="https://github.com/DodecaGoneSystems"><img src="https://img.shields.io/badge/Organization-DodecaGoneSystems-lightgrey?style=for-the-badge" /></a>
+  </p>
+</div>
 
 ---
 
-## 🔗 Other Resources
-- **[Void of Potential](https://github.com/haskinj/void)**: Mapping the layers of universal architecture.
-- **[Wonkys](https://github.com/haskinj/wonkys)**: Experimental scripts and code-scraps.
+### 🏛️ The Flagship Overview
+**DodecaGone Systems** is a multi-disciplinary research and development hub for **Cognitive Orchestration**, **Systems Biology**, and **High-Fidelity Knowledge Synthesis**. 
+
+This repository serves as the technical master overview of the entire ecosystem. We treat the human body and mind as integrated hardware. Our tools are designed to reduce cognitive friction, stabilize systems in crisis, and mathematically model lived experience using thermodynamics and category theory.
 
 ---
 
-### Contact & License
-All materials are licensed under `CC BY-SA 4.0`.
+### 🧰 The Toolkit Ecosystem
+The DodecaGone framework is divided into specialized open-source toolkits.
 
-`FIDELITY > COMFORT` \| `SPIRAL EVER UPWARDS` \| `CHIRAL SYMMETRICALITY`
+| Category | Official Repository | Description |
+| :--- | :--- | :--- |
+| 🛡️ **Stabilization** | **[You Are Here](https://github.com/DodecaGoneSystems/You-Are-Here)** | Crisis navigation and mechanical grounding. |
+| 🧰 **Execution** | **[Maintenance](https://github.com/haskinj/i-need-maintenance)** | Daily/Weekly human hardware manual. |
+| 📐 **Logic** | **[Forge Math](https://github.com/DodecaGoneSystems/ForgeMath)** | Formal mathematical framework (Thermodynamics/Category Theory). |
+| 📄 **Synthesis** | **[CR-IMRaD](https://github.com/DodecaGoneSystems/CR-IMRAD)** | A unified standard for high-fidelity technical writing. |
+| 🗺️ **Topography** | **[Void](https://github.com/DodecaGoneSystems/Void)** | Structural map for dimensional architectural layers. |
+| ⚖️ **Relational** | **[Seesaw Theory](https://github.com/DodecaGoneSystems/SeesawTheory)** | Decision mechanics and cascading consciousness. |
 
-*GNU TERRY PRATCHETT*
+---
+
+### 🌱 Core Axioms
+`FIDELITY > COMFORT` | `SPIRAL EVER UPWARDS` | `CHIRAL SYMMETRICALITY`
+
+<div align="right">
+  <code>><^</code><br>
+  <i>GNU Terry Pratchett</i>
+</div>
