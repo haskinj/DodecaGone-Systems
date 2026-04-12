@@ -92,11 +92,20 @@ def orchestrate():
         run("git init -b main", cwd=local_abs)
         
         remote_url = f"https://github.com/{account}/{name}.git"
+        # We don't remove origin if it exists to avoid errors on first run, 
+        # but the script currently does it. We'll keep it as is for consistency.
         run("git remote remove origin", cwd=local_abs)
         run(f"git remote add origin {remote_url}", cwd=local_abs)
         
         run("git add .", cwd=local_abs)
-        run('git commit -m "Initialize professional DodecaGone Systems structure (Clean Slate)"', cwd=local_abs)
+        
+        # Check if there are changes before committing
+        status = run("git status --porcelain", cwd=local_abs)
+        if status and status.strip():
+            run('git commit -m "Standardize professional DodecaGone metadata and hub citations (Professional Polish)"', cwd=local_abs)
+            print(f"Committed changes for {name}")
+        else:
+            print(f"No changes to commit for {name}")
         
         print(f"Push to {remote_url} is READY (Dry Run: git push -u origin main --force)")
 
