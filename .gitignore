@@ -1,0 +1,6 @@
+GitHub_Orchestration/
+GitHub_Deployments/
+_legacy_backups/
+.DS_Store
+venv/
+*.log

@@ -171,60 +171,77 @@
     display: inline-block;
     font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 2px;
     padding: 16px 32px; background: var(--accent); color: #000; font-weight: 700;
+    transition: all 0.3s ease;
   }
-  .btn:hover { background: #fff; color: #000; }
+  .btn:hover { background: #fff; color: #000; transform: translateY(-1px); }
 
-  .dl-secondary-row {
-    display: flex; gap: 20px; width: 100%; justify-content: center;
-    flex-wrap: wrap;
-  }
-  .dl-sec {
-    flex: 1; min-width: 280px;
-    background: var(--bg-card); border: 1px solid var(--border);
-    padding: 24px; text-align: center;
-  }
-  .dl-sec:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
-  .dl-sec h3 { font-family: var(--serif); font-size: 20px; margin-bottom: 10px; }
-  .dl-sec a.btn-outline {
-    display: inline-block; margin-top: 10px;
-    font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1px;
-    padding: 10px 20px; border: 1px solid var(--accent); color: var(--accent);
-  }
-  .dl-sec a.btn-outline:hover { background: var(--accent-dim); }
-
-  /* ── MEDIA SECTION ── */
-  .media-layout {
+  /* ── FINDINGS SECTION ── */
+  .findings-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto 80px;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 40px auto 80px;
     padding: 0 8vw;
-  }
-  
-  .media-placeholder {
-    background: var(--bg-secondary);
-    border: 1px dashed var(--border-hover);
-    height: 300px;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    color: var(--text-dim);
   }
   
-  .media-placeholder .icon {
-    font-size: 32px; margin-bottom: 16px; opacity: 0.5;
+  .findings-text {
+    text-align: left;
   }
   
-  .media-summary {
-    grid-column: 1 / -1;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
+  .findings-text h2 {
+    font-family: var(--serif);
+    font-size: 32px;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+  }
+
+  .findings-text p {
     font-size: 16px;
     color: var(--text-secondary);
+    margin-bottom: 20px;
     line-height: 1.8;
+  }
+
+  .findings-text .repo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 32px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .findings-text .repo-link:hover { color: var(--text-primary); }
+
+  .diagram-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .diagram-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: brightness(0.9) contrast(1.1);
+  }
+
+  .diagram-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 16px;
+    text-align: center;
   }
 
   /* ── SPOKES GRID ── */
@@ -296,25 +313,41 @@
 </div>
 
 <div class="downloads" style="display: flex; flex-direction: column; align-items: center; max-width: 1000px; margin: 0 auto 60px; padding: 0 8vw;">
-  <a href="downloads/seesaw.pdf" class="dl-main" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(232, 184, 124, 0.08) 100%); border: 1px solid var(--accent); padding: 40px; text-align: center; width: 100%; transition: all 0.3s ease; text-decoration: none;">
-    <h2 style="font-family: var(--serif); font-size: 36px; margin-bottom: 10px; color: var(--accent);">SEESAW THEORY OF CONSCIOUSNESS</h2>
-    <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 24px;">A Plinko-style model showing how tiny shifting decisions cascade into conscious thought (v1.4).<br><a href="https://doi.org/10.17605/OSF.IO/3XYJ9" target="_blank" style="font-family: var(--mono); font-size: 11px; opacity: 0.8; color: var(--accent);">DOI: 10.17605/OSF.IO/3XYJ9</a></p>
-    <div class="btn" style="display: inline-block; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; padding: 16px 32px; background: var(--accent); color: #000; font-weight: 700;">Download / View PDF</div>
-  </a>
+  <div class="dl-main" style="background: linear-gradient(135deg, var(--bg-card) 0%, rgba(232, 184, 124, 0.08) 100%); border: 1px solid var(--accent); padding: 50px 40px; text-align: center; width: 100%; transition: all 0.3s ease; position: relative; overflow: hidden;">
+    <h2 style="font-family: var(--serif); font-size: 36px; margin-bottom: 12px; color: var(--accent);">SEESAW THEORY OF CONSCIOUSNESS</h2>
+    <p style="font-size: 15px; color: var(--text-secondary); margin-bottom: 32px; line-height: 1.6;">
+        A Plinko-style model showing how tiny shifting decisions cascade into conscious thought (v1.5).
+        <br>
+        <a href="https://doi.org/10.17605/OSF.IO/3XYJ9" target="_blank" style="font-family: var(--mono); font-size: 11px; opacity: 0.8; color: var(--accent); display: inline-block; margin-top: 8px;">DOI: 10.17605/OSF.IO/3XYJ9</a>
+    </p>
+    <a href="downloads/seesaw-theory.pdf" class="btn">Download Primary Paper</a>
+  </div>
 </div>
 
 <div class="category" style="padding: 0 8vw 60px; max-width: 1000px; margin: 0 auto; color: var(--text-secondary); line-height: 1.8; font-size: 16px; text-align: center;">
     The Seesaw Theory outlines a formal framework for balancing human cognitive load through counter-balancing affective and operational mechanisms. It provides an honest audit of standard therapeutic "industrial smoothing" by mapping somatic telemetry against operational limits.
 </div>
 
-<div class="media-layout" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 1000px; margin: 0 auto 80px; padding: 0 8vw;">
-  <div class="media-placeholder" style="background: var(--bg-secondary); border: 1px dashed var(--border-hover); height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--text-dim);">
-    <div class="icon" style="font-size: 32px; margin-bottom: 16px; opacity: 0.5;">▶</div>
-    <div style="font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">[ Video Attachment ]</div>
+<div class="findings-layout">
+  <div class="findings-text">
+    <h2>Key Findings</h2>
+    <p>
+        The Seesaw Theory posits that consciousness is not a static state, but a dynamic equilibrium maintained by a constant 
+        barrage of tiny, binary shifting decisions. By mapping these cascades, we can observe how operational limits 
+        interface with affective somatic telemetry.
+    </p>
+    <p>
+        Significant research has been dedicated to auditing the "industrial smoothing" of human emotion—the systemic 
+        damping of these cascades in modern clinical environments. The Seesaw model provides the necessary 
+        mathematical and physiological baseline to reclaim these oscillations.
+    </p>
+    <a href="https://github.com/haskinj/SeesawTheory" target="_blank" class="repo-link">
+        <span style="font-size: 16px;">⎋</span> &nbsp; view supplementary files on github
+    </a>
   </div>
-  <div class="media-placeholder" style="background: var(--bg-secondary); border: 1px dashed var(--border-hover); height: 300px; display: flex; align-items: center; justify-content: center; flex-direction: column; color: var(--text-dim);">
-    <div class="icon" style="font-size: 32px; margin-bottom: 16px; opacity: 0.5;">◈</div>
-    <div style="font-family: var(--mono); font-size: 12px; letter-spacing: 2px; text-transform: uppercase;">[ Framework Diagram ]</div>
+  <div class="diagram-container">
+    <img src="images/seesaw_figure.png" alt="Seesaw Theory Framework Diagram">
+    <div class="diagram-label">fig 1.1 — operational cascade equilibrium</div>
   </div>
 </div>
 <footer>
